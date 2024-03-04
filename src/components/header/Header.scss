@@ -1,0 +1,19 @@
+.header {
+    @apply flex justify-between items-center gap-1 px-4 py-1 h-[8vh]  bg-[var(--bg-container)] text-white z-[998];
+
+    .header__left {
+        @apply flex justify-start items-center gap-4;
+        .img {
+            @apply w-1/5 lg:w-1/3;
+        }
+    }
+
+    .header__center {
+        .input-search {
+        }
+    }
+}
+
+#dropdownLogin {
+    @apply absolute right-0 z-[997] ease-linear duration-100;
+}

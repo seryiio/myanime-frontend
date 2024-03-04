@@ -1,0 +1,16 @@
+.aside {
+    @apply flex justify-start items-center flex-col gap-5 text-[var(--text-color)] py-2;
+}
+
+.main-content {
+    @apply flex-1 grid gap-2 overflow-y-scroll bg-[var(--bg-container)] rounded-lg;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #626362;
+    border-radius: 20px;
+}

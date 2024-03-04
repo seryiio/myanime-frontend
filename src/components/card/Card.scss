@@ -1,0 +1,22 @@
+.swiper-card {
+    @apply w-[81.8vw];
+
+    .content-swiper-slide__card {
+        @apply bg-[#222221] w-2 h-max p-2 rounded-lg;
+
+        .card {
+            @apply flex flex-col gap-2;
+
+            .card__img {
+
+                img {
+                    @apply rounded-md w-full h-[16em]
+                }
+            }
+
+            .card__description {
+                @apply text-white;
+            }
+        }
+    }
+}

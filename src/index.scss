@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --bg-body: #010100;
+  --bg-container: #121313;
+  --text-color: white;
+
+  --bg-button: #46B3E6;
+  --text-color-button: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  @apply px-3 py-2 rounded-lg bg-[var(--bg-button)] text-[var(--text-color-button)];
+}
+
+h1{
+  font-weight: 800;
+}
+
+body {
+  @apply bg-[var(--bg-body)];
+  font-family: 'Baloo 2 Variable', system-ui;
+}

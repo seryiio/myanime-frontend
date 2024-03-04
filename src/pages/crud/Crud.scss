@@ -1,0 +1,40 @@
+.crud {
+
+    h1 {
+        font-size: 2em;
+        @apply text-[var(--text-color)];
+    }
+
+    h2 {
+        font-size: 1.5em;
+        @apply text-[var(--text-color)];
+    }
+
+    h3 {
+        font-size: 1.17em;
+        @apply text-[var(--text-color)];
+    }
+
+    p {
+        font-size: 1em;
+        @apply text-black;
+    }
+
+    label {
+        @apply text-white;
+    }
+
+    input {
+        @apply text-black;
+    }
+}
+
+.modal {
+    & .modal__dialog {
+        @apply overflow-y-scroll;
+
+        & .modal__dialog--title {
+            @apply text-black;
+        }
+    }
+}

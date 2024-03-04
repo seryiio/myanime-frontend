@@ -1,0 +1,8 @@
+.dropdown {
+    @apply bg-[--bg-container] text-white w-44 p-8;
+    .dropdown__nav {
+        .dropdown__nav--ul {
+            @apply flex justify-start items-center flex-col gap-8;
+        }
+    }
+}
