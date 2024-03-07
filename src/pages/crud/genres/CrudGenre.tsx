@@ -1,14 +1,8 @@
 import { Form, Link } from "react-router-dom";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button, Tooltip, Pagination, Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+
+import { useEffect, useMemo, useState } from "react";
 import { Genre } from "../../../interfaces/Genre";
 import { getGenres, urlGenres } from "../../../services/GenreService";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -25,11 +19,23 @@ const CrudGenre = () => {
         getGenres(setGenres);
     }, []);
 
+    const [page, setPage] = useState(1);
+    const rowsPerPage = 4;
+
+    const pages = Math.ceil(genres.length / rowsPerPage);
+    const items = useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return genres.slice(start, end);
+    }, [page, genres]);
+
     const validate = async () => {
-        let parameters: Genre = { name: '' };
+        let parameters: Genre;
         let method: string = '';
 
         if (name.trim() === '') {
+            parameters = { name: '' }
             console.log("Please provide a name");
         } else {
             parameters = { name: name.trim() };
@@ -44,11 +50,11 @@ const CrudGenre = () => {
             if (method === "PUT") {
             } else {
                 await axios({ method: method, url: urlGenres, data: parameters });
-                getGenres(setGenres);
             }
         } catch (error) {
             alert('Hubo un error');
         }
+        getGenres(setGenres);
     };
 
     const deleteGenre = async (id: number | undefined) => {
@@ -66,54 +72,77 @@ const CrudGenre = () => {
     return (
         <>
             <div className="create">
+                <Breadcrumbs className="dark">
+                    <BreadcrumbItem> <Link to={`/crud`}>CRUD</Link> </BreadcrumbItem>
+                    <BreadcrumbItem>Géneros</BreadcrumbItem>
+                </Breadcrumbs>
                 <h1>Crear</h1>
 
                 <Form className="flex justify-center items-center h-max gap-8" method="post">
                     <label htmlFor="">Género: </label>
                     <input type="text" id="name" placeholder="Nombre" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={handleKeyPress} />
-                    <Button variant="contained" color="success" onClick={() => validate()} >
+                    <Button color="success" onClick={() => validate()} >
                         Crear
                     </Button>
                 </Form>
             </div>
             <div className="list">
                 <h1>Lista de Generos</h1>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>Genero</TableCell>
-                                <TableCell>Opciones</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        {
-                            genres.length ? (
-                                <TableBody>
-                                    {genres.map((genre) => (
-                                        <TableRow
-                                            key={genre.id}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {genre.id}
-                                            </TableCell>
+                <Table
+                    aria-label="Table Genres"
+                    bottomContent={
+                        <div className="flex w-full justify-center">
+                            <Pagination
+                                isCompact
+                                showControls
+                                showShadow
+                                color="secondary"
+                                page={page}
+                                total={pages}
+                                onChange={(page) => setPage(page)}
+                            />
+                        </div>
+                    }
+                    classNames={{
+                        wrapper: "min-h-[222px]",
+                    }}>
+                    <TableHeader>
+                        <TableColumn>ID</TableColumn>
+                        <TableColumn>GÉNERO</TableColumn>
+                        <TableColumn>OPCIONES</TableColumn>
+                    </TableHeader>
+
+                    {
+                        items.length ? (
+                            <TableBody items={items}>
+                                {
+                                    (genre) => (
+                                        <TableRow key={genre.id}>
+                                            <TableCell>{genre.id}</TableCell>
                                             <TableCell>{genre.name}</TableCell>
-                                            <TableCell>
-                                                <Button variant="contained" color="warning">
-                                                    <FontAwesomeIcon icon={faPenToSquare} />
-                                                </Button>
-                                                <Button onClick={() => deleteGenre(genre.id)} variant="contained" color="error">
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                </Button>
+                                            <TableCell className="flex gap-2">
+                                                <Tooltip content="Editar">
+                                                    <a>
+                                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faPenToSquare} />
+                                                        </span>
+                                                    </a>
+                                                </Tooltip>
+                                                <Tooltip content="Eliminar">
+                                                    <a onClick={() => deleteGenre(genre.id)}>
+                                                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </span>
+                                                    </a>
+                                                </Tooltip>
                                             </TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            ) : <TableBody><TableRow className="italic text-gray-500">No hay resultados</TableRow></TableBody>
-                        }
-                    </Table>
-                </TableContainer>
+                                    )
+                                }
+                            </TableBody>
+                        ) : <TableBody emptyContent={"No hay contenido."}>{[]}</TableBody>
+                    }
+                </Table>
             </div>
         </>
     )

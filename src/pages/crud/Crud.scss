@@ -38,3 +38,67 @@
         }
     }
 }
+
+.formSeasonbA {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+        "number titleJapanese titleJapanese titleEnglish titleEnglish status"
+        "description description description description year seasonYear"
+        "type studio studio urlTrailer urlTrailer urlTrailer"
+        "image image coverImage coverImage coverImageSecondary coverImageSecondary";
+
+    .form__inputNumber {
+        grid-area: number;
+    }
+
+    .form__inputTitleJapanese {
+        grid-area: titleJapanese;
+    }
+
+    .form__inputTitleEnglish {
+        grid-area: titleEnglish;
+
+    }
+
+    .form__inputDescription {
+        grid-area: description;
+    }
+
+    .form__inputYear {
+        grid-area: year;
+    }
+
+    .form__inputSeasonYear {
+        grid-area: seasonYear;
+    }
+
+    .form__inputType {
+        grid-area: type;
+    }
+
+    .form__inputStudio {
+        grid-area: studio;
+    }
+
+    .form__inputImage {
+        grid-area: image;
+    }
+
+    .form__inputCoverImage {
+        grid-area: coverImage;
+    }
+
+    .form__inputCoverImageSecondary {
+        grid-area: coverImageSecondary;
+    }
+
+    .form__inputUrlTrailer {
+        grid-area: urlTrailer;
+    }
+
+    .form__CheckboxStatus {
+        grid-area: status;
+    }
+}

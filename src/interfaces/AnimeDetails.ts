@@ -1,5 +1,7 @@
 import { Genre } from "./Genre";
-export interface Anime {
+import { Season } from "./Season";
+
+export interface AnimeDetails {
     id?: number,
     title_japanese: string,
     title_english: string,
@@ -7,4 +9,5 @@ export interface Anime {
     logo_image: string,
     image: string,
     genres: Genre[],
+    seasons: Season[]
 }

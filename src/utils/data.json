@@ -1,36 +1,21 @@
 [
     {
-        "title": "The Girl I Like Forgot Her Glasses",
-        "type": "TV",
+        "title_japanese": "Suki na Ko ga Megane wo Wasureta",
+        "title_english": "The Girl I Like Forgot Her Glasses",
         "description": "All Kaede Komura wishes for is that his cute classmate Ai Mie would spare one passing glance his way, even if it’s through her thick lenses.",
-        "year": "2023-07-04",
-        "image": "https://m.media-amazon.com/images/M/MV5BMGZlNDI1N2UtYWM2Ny00YWY3LTk3NWMtNGNkYjQzMDViNmM4XkEyXkFqcGdeQXVyOTE4NzcwNzI@._V1_.jpg",
-        "cover_image": "https://www.crunchyroll.com/imgsrv/display/thumbnail/1200x675/catalog/crunchyroll/b5de387d9b810e125fd674589819aa16.jpe",
-        "url": "https://www.crunchyroll.com/es/series/GNVHKN9DE/the-girl-i-like-forgot-her-glasses?referrer=cap_cr_carousel_2_girl-i-like_la_230816",
-        "url_trailer": "https://youtube.com/embed/0rdFjUrqjKM",
-        "status": false
+        "image": "https://m.media-amazon.com/images/M/MV5BMGZlNDI1N2UtYWM2Ny00YWY3LTk3NWMtNGNkYjQzMDViNmM4XkEyXkFqcGdeQXVyOTE4NzcwNzI@._V1_.jpg"
     },
     {
-        "title": "MASHLE: MAGIC AND MUSCLES",
-        "type": "TV",
+        "title_japanese": "MASHLE",
+        "title_english": "MASHLE: MAGIC AND MUSCLES",
         "description": "Este es un mundo en el que todos usan la magia habitualmente.",
-        "year": "2023-04-08",
-        "image": "https://www.crunchyroll.com/imgsrv/display/thumbnail/480x720/catalog/crunchyroll/f7dfe109de592c6dd9a78dc75ec1965b.jpe",
-        "cover_image": "https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=1200,height=675,fit=contain,quality=85/catalog/crunchyroll/7ce6bedc77c1c73383d404e7c1de2e4e.jpe",
-        "url": "https://www.crunchyroll.com/es/series/GDKHZEP8W/mashle-magic-and-muscles",
-        "url_trailer": "https://www.youtube.com/embed/OXQvk5-KVTw",
-        "status": true
+        "image": "https://www.crunchyroll.com/imgsrv/display/thumbnail/480x720/catalog/crunchyroll/f7dfe109de592c6dd9a78dc75ec1965b.jpe"
     },
     {
-        "title": "Jujutsu Kaisen",
-        "type": "TV",
+        "titl_japanese": "Jujutsu Kaisen",
+        "title_english": "Jujutsu Kaisen",
         "description": "Yuji Itadori se traga un dedo maldito para salvar a alguien de su clase y ahora Ryomen Sukuna, un poderoso hechicero malvado conocido como el Rey de las Maldiciones, vive en su alma.",
-        "year": "2020-10-03",
-        "image": "https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=480,height=720,fit=contain,quality=85/catalog/crunchyroll/e4e80c83c792d81c138e320874dbdffc.jpe",
-        "cover_image": "https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=1200,height=675,fit=contain,quality=85/catalog/crunchyroll/8b7f5847f9b97f921e41d4ef59fd2d79.jpe",
-        "url": "https://www.crunchyroll.com/es/series/GRDV0019R/jujutsu-kaisen",
-        "url_trailer": "https://www.youtube.com/embed/aPBUUJbrAWo",
-        "status": false
+        "image": "https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=480,height=720,fit=contain,quality=85/catalog/crunchyroll/e4e80c83c792d81c138e320874dbdffc.jpe"
     }
 ]
 
@@ -83,7 +68,6 @@
     {
         "id": 3,
         "title": "MASHLE: MAGIC AND MUSCLES",
-        "type": "TV",
         "description": "Este es un mundo en el que todos usan la magia habitualmente.",
         "year": "2023-04-08",
         "image": "https://www.crunchyroll.com/imgsrv/display/thumbnail/480x720/catalog/crunchyroll/f7dfe109de592c6dd9a78dc75ec1965b.jpe",
@@ -124,7 +108,6 @@
     {
         "id": 4,
         "title": "The Girl I Like Forgot Her Glasses",
-        "type": "TV",
         "description": "All Kaede Komura wishes for is that his cute classmate Ai Mie would spare one passing glance his way, even if it’s through her thick lenses.",
         "year": "2023-07-04",
         "image": "https://m.media-amazon.com/images/M/MV5BMGZlNDI1N2UtYWM2Ny00YWY3LTk3NWMtNGNkYjQzMDViNmM4XkEyXkFqcGdeQXVyOTE4NzcwNzI@._V1_.jpg",
@@ -165,7 +148,6 @@
     {
         "id": 5,
         "title": "Jujutsu Kaisen",
-        "type": "TV",
         "description": "Yuji Itadori se traga un dedo maldito para salvar a alguien de su clase y ahora Ryomen Sukuna, un poderoso hechicero malvado conocido como el Rey de las Maldiciones, vive en su alma.",
         "year": "2020-10-03",
         "image": "https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=480,height=720,fit=contain,quality=85/catalog/crunchyroll/e4e80c83c792d81c138e320874dbdffc.jpe",

@@ -1,12 +1,20 @@
+const {nextui} = require("@nextui-org/react");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        '3-max-content-center': '0.5fr 1fr 0.5fr'
+      }
+    },
   },
-  plugins: [],
+  darkMode: "class",
+  plugins: [nextui()],
 }
 

@@ -2,9 +2,6 @@ import { Outlet } from 'react-router-dom'
 import './App.scss'
 import Sidebar from './components/sidebar/Sidebar'
 import Header from './components/header/Header'
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleLeft } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
 

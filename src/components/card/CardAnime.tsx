@@ -44,14 +44,14 @@ export const CardAnime = () => {
                 {
                     animes.map((anime) => (
                         <>
-                            <SwiperSlide className='content-swiper-slide__card'>
+                            <SwiperSlide key={anime.id} className='content-swiper-slide__card'>
                                 <a href={`/animes/${anime.id}`}>
                                     <div className="card">
                                         <div className="card__img">
-                                            <img src={anime.image} alt={anime.title} />
+                                            <img src={anime.image} alt={anime.title_english} />
                                         </div>
                                         <div className="card__description">
-                                            {anime.title}
+                                            {anime.title_english}
                                         </div>
                                     </div>
                                 </a>

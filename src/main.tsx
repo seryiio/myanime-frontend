@@ -19,6 +19,10 @@ import AnimeData from './pages/animeData/AnimeData.tsx';
 import Register from './pages/register/Register.tsx';
 import CrudSeason from './pages/crud/seasons/CrudSeason.tsx';
 import CrudSeasonbA from './pages/crud/seasons/CrudSeasonbA.tsx';
+import CrudEpisodesbS from './pages/crud/episodes/CrudEpisodesbS.tsx';
+import { NextUIProvider } from '@nextui-org/react';
+import SeasonData from './pages/seasonData/SeasonData.tsx';
+import CrudSong from './pages/crud/songs/CrudSong.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,13 +40,22 @@ const router = createBrowserRouter([
         path: 'crud/animes', element: <CrudAnime />
       },
       {
-        path: 'crud/animes/:id', element: <CrudSeasonbA />
+        path: 'crud/animes/:id/seasons', element: <CrudSeasonbA />
+      },
+      {
+        path: 'crud/animes/:id/seasons/:idseason/episodes', element: <CrudEpisodesbS />
+      },
+      {
+        path: 'crud/animes/:id/seasons/:idseason/songs', element: <CrudSong />
       },
       {
         path: 'crud/seasons', element: <CrudSeason />
       },
       {
         path: 'animes/:id', element: <AnimeData />
+      },
+      {
+        path: 'animes/:id/seasons/:idSeason', element: <SeasonData />
       },
     ],
   },
@@ -57,7 +70,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <NextUIProvider>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </NextUIProvider>,
 )
