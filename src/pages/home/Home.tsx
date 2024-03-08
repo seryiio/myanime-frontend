@@ -30,38 +30,39 @@ export const Home = () => {
 
     return (
         <>
-            <section className='section-1'>
                 <Swiper centeredSlides={true}
                     autoplay={{
                         delay: 2500,
                         disableOnInteraction: false,
-                    }} pagination={true} modules={[Autoplay, Pagination]} className="swiper-section-1">
+                    }} pagination={true} modules={[Autoplay, Pagination]} className="swiper-carousel-home">
                     {
                         lastSeasonWithDataAnime.map((anime) => (
-                            <SwiperSlide key={anime.id} className='content-swiper-slide'>
-                                <div className='opacity'></div>
-                                <div className="section-1__description">
-                                    <div className="section-1__description--content">
-                                        <div className="title text-center">
-                                            <img src={anime.logo_image} alt={anime.title_english} />
+                            <SwiperSlide key={anime.id} className='swiper-carousel-home__slide'>
+                                <div className='swiper-carousel-home__slide--content'>
+                                    <div className='opacity'></div>
+                                    <div className="section-1__description">
+                                        <div className="section-1__description--content">
+                                            <div className="title">
+                                                <img src={anime.logo_image} alt={anime.title_english} />
+                                            </div>
+                                            <p className='p-8 w-full h-32 text-ellipsis overflow-hidden'>{anime.synopsis}</p>
+                                            <Link className='button' to={`/animes/${anime.id}`}>Ver anime</Link>
                                         </div>
-                                        <Link className='button' to={`/animes/${anime.id}`}>Ver anime</Link>
                                     </div>
-                                </div>
-                                <div className="section-1__img">
-                                    {
-                                        anime.seasons.map((season) =>
-                                            <img src={season.cover_image_secondary} alt={season.title_english} />
-                                        )
-                                    }
+                                    <div className="section-1__img">
+                                        {
+                                            anime.seasons.map((season) =>
+                                                <img src={season.cover_image_secondary} alt={season.title_english} />
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             </SwiperSlide>
                         ))
                     }
                 </Swiper>
-            </section>
             <section className='section-2'>
-                <h1>TOP Animes Winter 2024</h1>
+                <h1 className='p-2'>TOP Animes Winter 2024</h1>
                 <div className="section-2__slide">
                     <CardAnime />
                 </div>
@@ -73,7 +74,7 @@ export const Home = () => {
             <section className='section-4'>
                 <h1>Nuevos Episodios</h1>
                 <CardAnime />
-            </section>
+            </section> 
         </>
     )
 }

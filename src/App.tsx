@@ -1,18 +1,20 @@
 import { Outlet } from 'react-router-dom'
 import './App.scss'
 import Sidebar from './components/sidebar/Sidebar'
-import Header from './components/header/Header'
+import BottomNavBar from './components/bottomNavBar/BottomNavBar'
 
 function App() {
 
   return (
     <>
-      <Header />
-      <div className='flex gap-2 h-[92vh] p-2'>
+      <div className='relative top-0 left-0 w-full h-screen flex gap-2 p-2 z-[997]'>
         <Sidebar />
         <main className='main-content flex-1'>
           <Outlet />
         </main>
+      </div>
+      <div className='sticky bottom-0 left-0 w-full h-max  block lg:hidden bg-[var(--bg-container)] z-[998]'>
+        <BottomNavBar />
       </div>
     </>
   )

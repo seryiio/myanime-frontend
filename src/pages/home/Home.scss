@@ -26,46 +26,59 @@ input {
     @apply text-black;
 }
 
-.section-1 {
-    @apply w-full h-full rounded-md;
+// .section-1{
+//     @apply w-[95vw] lg:w-[84.5vw] h-[32em]  rounded-md bg-white;
 
-    .swiper-section-1 {
-        @apply h-full;
+.swiper-carousel-home {
+    @apply w-[905w] lg:w-full h-[32em] bg-white lg:h-screen rounded-md;
 
-        .content-swiper-slide {
+    .swiper-carousel-home__slide {
+        @apply h-[32em];
+
+        .swiper-carousel-home__slide--content {
             display: grid;
             width: 100%;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr;
 
             .opacity {
-                @apply block md:hidden  w-full h-full z-[996] bg-black opacity-70;
+                @apply block md:hidden w-full h-[32em] lg:h-full z-[996] bg-black opacity-70;
                 grid-column: 1/3;
                 grid-row: 1/2;
             }
 
             .section-1__description {
-                @apply flex justify-start content-center h-full px-4 rounded-md z-[997] md:bg-gradient-to-r md:from-black from-5%;
+                @apply flex justify-start content-center h-[32em] lg:h-full rounded-md z-[997] md:bg-gradient-to-r md:from-black from-5%;
                 grid-column: 1/3;
                 grid-row: 1/2;
 
                 .section-1__description--content {
-                    @apply flex flex-col justify-center items-center px-4 gap-4 lg:w-[20em] h-full;
+                    @apply flex flex-col justify-start items-center gap-4 lg:w-[20em] h-full;
+                }
+
+                .title {
+                    @apply flex justify-center items-center py-8 lg:p-4;
+
+                    img {
+                        @apply w-[75%] lg:w-full;
+                    }
                 }
             }
 
             .section-1__img {
-                @apply w-full h-full rounded-md z-[995];
+                @apply w-full h-[32em] lg:h-full rounded-md z-[995];
                 grid-column: 1/3;
                 grid-row: 1/2;
 
                 img {
-                    @apply w-full h-full object-fill rounded-md ;
+                    @apply w-full h-full object-cover rounded-md;
                 }
             }
         }
     }
 }
+
+
 
 .section-2,
 .section-3,

@@ -51,7 +51,7 @@ export const AnimeData = () => {
                         transition={{ duration: 1.5 }}
                     >
                         <img src={animeGenresById?.logo_image} width={350} alt="" /></motion.div>
-                    <div className="save-anime flex justify-between items-center gap-y-2 gap-x-10">
+                    <div className="save-anime flex flex-wrap justify-center lg:justify-between items-center gap-y-4 gap-x-10">
                         <a href="" className='flex justify-center items-center gap-2'>
                             <FontAwesomeIcon icon={faBookmark} style={{ color: "#ffffff", }} />
                             <h3>{ADD_FAVORITE}</h3>

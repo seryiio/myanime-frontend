@@ -50,7 +50,7 @@ export const CardAnime = () => {
                                         <div className="card__img">
                                             <img src={anime.image} alt={anime.title_english} />
                                         </div>
-                                        <div className="card__description">
+                                        <div className="card__description h-5 truncate">
                                             {anime.title_english}
                                         </div>
                                     </div>

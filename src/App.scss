@@ -3,7 +3,7 @@
 }
 
 .main-content {
-    @apply flex-1 grid gap-2 overflow-y-scroll bg-[var(--bg-container)] rounded-lg;
+    @apply flex-1 grid gap-2 overflow-y-scroll h-full bg-[var(--bg-container)] rounded-lg;
 }
 
 *::-webkit-scrollbar {

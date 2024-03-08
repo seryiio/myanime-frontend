@@ -1,5 +1,4 @@
-#aside {
-}
+#aside {}
 
 .aside.close {
     @apply w-9;
@@ -15,6 +14,12 @@
                 @apply justify-center;
             }
         }
+
+        .aside__content-1--search {
+            .link {
+                @apply justify-center;
+            }
+        }
     }
 
     .aside__content-2 {
@@ -26,15 +31,31 @@
             }
         }
     }
+
+    .aside__content-2--bottom {
+        .list {
+            .link {
+                @apply justify-center;
+            }
+        }
+    }
 }
 
 .aside {
     @apply hidden lg:flex flex-col h-full text-[var(--text-color)];
 
     .aside__content-1 {
-        @apply flex justify-center items-center flex-col w-full bg-[var(--bg-container)] rounded-lg p-4;
+        @apply flex justify-center items-center flex-col w-full bg-[var(--bg-container)] rounded-lg p-4 gap-8;
 
         .aside__content-1--home {
+            @apply flex justify-start items-center gap-2 w-full;
+
+            .link {
+                @apply flex justify-start items-center gap-2 w-full;
+            }
+        }
+
+        .aside__content-1--search {
             @apply flex justify-start items-center gap-2 w-full;
 
             .link {
