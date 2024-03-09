@@ -6,10 +6,12 @@ import 'swiper/css/pagination';
 
 import './Card.scss'
 
-import { FreeMode, Pagination } from 'swiper/modules';
+import { FreeMode, Navigation, Pagination } from 'swiper/modules';
 import { useEffect, useState } from 'react';
 import { Anime } from '../../interfaces/Anime';
 import { getAnimes } from '../../services/AnimeService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export const CardAnime = () => {
 
@@ -24,42 +26,41 @@ export const CardAnime = () => {
         <>
             <Swiper
                 freeMode={true}
-                breakpoints={{
-                    120: {
-                        slidesPerView: 2,
-                        spaceBetween: 20
-                    },
-                    720: {
-                        slidesPerView: 4,
-                        spaceBetween: 20
-                    },
-                    1200: {
-                        slidesPerView: 5,
-                        spaceBetween: 20
-                    }
+                slidesPerView='auto'
+                spaceBetween={10}
+                navigation={{
+                    nextEl: '.swiper-card--btnNext',
+                    prevEl: '.swiper-card--btnPrev',
                 }}
-                modules={[FreeMode, Pagination]}
-                className="swiper-card ml-0 mr-0"
+                modules={[FreeMode, Navigation]}
+                className="swiper-card"
             >
                 {
                     animes.map((anime) => (
                         <>
-                            <SwiperSlide key={anime.id} className='content-swiper-slide__card'>
-                                <a href={`/animes/${anime.id}`}>
-                                    <div className="card">
-                                        <div className="card__img">
-                                            <img src={anime.image} alt={anime.title_english} />
+                            <SwiperSlide key={anime.id} className='swiper-card__slide'>
+                                <div className='swiper-card__slide--content'>
+                                    <a href={`/animes/${anime.id}`}>
+                                        <div className="card">
+                                            <div className="card__img">
+                                                <img src={anime.image} alt={anime.title_english} />
+                                            </div>
+                                            <div className="card__description h-5 truncate">
+                                                {anime.title_english}
+                                            </div>
                                         </div>
-                                        <div className="card__description h-5 truncate">
-                                            {anime.title_english}
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
                             </SwiperSlide>
-
                         </>
                     ))
                 }
+                <button className="swiper-card--btnPrev z-[998]">
+                    <FontAwesomeIcon icon={faChevronLeft} size='2xl' style={{color:'white'}}/>
+                </button>
+                <button className="swiper-card--btnNext z-[998]">
+                    <FontAwesomeIcon icon={faChevronRight} size='2xl' style={{color:'white'}}/>
+                </button>
             </Swiper >
         </>
     )

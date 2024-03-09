@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './Home.scss'
 import { CardAnime } from '../../components/card/CardAnime';
 import { Anime } from '../../interfaces/Anime';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { getAnimes, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -30,6 +30,7 @@ export const Home = () => {
 
     return (
         <>
+            <Suspense fallback={<div className='bg-white'>Cargando...</div>}>
                 <Swiper centeredSlides={true}
                     autoplay={{
                         delay: 2500,
@@ -61,6 +62,7 @@ export const Home = () => {
                         ))
                     }
                 </Swiper>
+            </Suspense>
             <section className='section-2'>
                 <h1 className='p-2'>TOP Animes Winter 2024</h1>
                 <div className="section-2__slide">
@@ -74,7 +76,7 @@ export const Home = () => {
             <section className='section-4'>
                 <h1>Nuevos Episodios</h1>
                 <CardAnime />
-            </section> 
+            </section>
         </>
     )
 }

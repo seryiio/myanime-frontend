@@ -23,6 +23,8 @@ import CrudEpisodesbS from './pages/crud/episodes/CrudEpisodesbS.tsx';
 import { NextUIProvider } from '@nextui-org/react';
 import SeasonData from './pages/seasonData/SeasonData.tsx';
 import CrudSong from './pages/crud/songs/CrudSong.tsx';
+import ListGenres from './pages/genre/ListGenres.tsx';
+import ListAnimesByGenre from './pages/anime/ListAnimesByGenre.tsx';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,12 @@ const router = createBrowserRouter([
       },
       {
         path: 'crud/seasons', element: <CrudSeason />
+      },
+      {
+        path: 'genres', element: <ListGenres />
+      },
+      {
+        path: 'genres/:id', element: <ListAnimesByGenre />
       },
       {
         path: 'animes/:id', element: <AnimeData />

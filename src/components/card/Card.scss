@@ -1,22 +1,26 @@
 .swiper-card {
-    @apply w-[81.8vw];
-
-    .content-swiper-slide__card {
-        @apply bg-[#222221] w-2 h-max p-2 rounded-lg;
-
-        .card {
-            @apply flex flex-col gap-2;
-
-            .card__img {
-
-                img {
-                    @apply rounded-md w-full h-[16em];
+    @apply relative top-0 left-0 w-[91vw] lg:w-[83.5vw];
+    .swiper-card__slide {
+        @apply w-[12em];
+        .swiper-card__slide--content {
+            @apply bg-[#222221] w-[12em] h-max p-2 rounded-lg;
+            .card {
+                @apply flex flex-col gap-2;
+                .card__img {
+                    img {
+                        @apply rounded-md w-full h-[16em];
+                    }
                 }
-            }
-
-            .card__description {
-                @apply text-white;
+                .card__description {
+                    @apply text-white;
+                }
             }
         }
     }
+    .swiper-card--btnPrev,.swiper-card--btnNext{
+        @apply h-full w-max p-2 bg-transparent/20;
+    }
+
+    .swiper-card--btnPrev{@apply absolute top-0 left-0 pl-2;}
+    .swiper-card--btnNext{@apply absolute top-0 right-0 pl-2;}
 }

@@ -1,4 +1,4 @@
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -10,7 +10,8 @@ export default {
   theme: {
     extend: {
       gridTemplateColumns: {
-        '3-max-content-center': '0.5fr 1fr 0.5fr'
+        '3-max-content-center': '0.5fr 1fr 0.5fr',
+        'auto-col': 'repeat(auto-fill,minmax(150px,1fr))',
       }
     },
   },

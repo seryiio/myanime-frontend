@@ -30,7 +30,7 @@ input {
 //     @apply w-[95vw] lg:w-[84.5vw] h-[32em]  rounded-md bg-white;
 
 .swiper-carousel-home {
-    @apply w-[905w] lg:w-full h-[32em] bg-white lg:h-screen rounded-md;
+    @apply w-full lg:w-full h-[32em] lg:h-screen rounded-md;
 
     .swiper-carousel-home__slide {
         @apply h-[32em];
