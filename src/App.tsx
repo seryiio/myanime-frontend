@@ -13,7 +13,7 @@ function App() {
           <Outlet />
         </main>
       </div>
-      <div className='sticky bottom-0 left-0 w-full h-max  block lg:hidden bg-[var(--bg-container)]'>
+      <div className='sticky bottom-0 left-0 w-full h-max  block lg:hidden bg-[var(--bg-container)] z-[996]'>
         <BottomNavBar />
       </div>
     </>

@@ -39,6 +39,54 @@
     }
 }
 
+.formBook {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+        "titleJapanese titleJapanese titleEnglish titleEnglish"
+        "synopsis synopsis author author"
+        "bookType year seasonYear status"
+        "puntuation genres genres genres ";
+
+    .formBook__input-titleJapanese {
+        grid-area: titleJapanese;
+    }
+
+    .formBook__input-titleEnglish {
+        grid-area: titleEnglish;
+
+    }
+
+    .formBook__input-synopsis {
+        grid-area: synopsis;
+    }
+
+    .formBook__input-year {
+        grid-area: year;
+    }
+
+    .formBook__input-seasonYear {
+        grid-area: seasonYear;
+    }
+
+    .formBook__input-author {
+        grid-area: author;
+    }
+
+    .formBook__input-status {
+        grid-area: status;
+    }
+
+    .formBook__input-puntuation {
+        grid-area: puntuation;
+    }
+
+    .formBook__input-genres {
+        grid-area: genres;
+    }
+}
+
 .formSeasonbA {
     display: grid;
     grid-template-columns: repeat(6, 1fr);

@@ -5,13 +5,12 @@ import '../Crud.scss'
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button, Tooltip, Pagination, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Checkbox, Input, Select, SelectItem, Chip, Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 
 import { Season } from "../../../interfaces/Season";
-import { URL_SEASON, URL_SEASON_BY_ANIME, getAllSeasonsById } from "../../../services/SeasonService";
+import { URL_SEASON, getAllSeasonsByAnimeId } from "../../../services/SeasonService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import ModalDialog from "@mui/joy/ModalDialog";
-import axios from "axios";
 import { showAlert } from "../../../utils/Alert";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 export const CrudSeasonbA = () => {
 
@@ -40,7 +39,7 @@ export const CrudSeasonbA = () => {
     const convertIdAnime = animeIdparam ? parseInt(animeIdparam) : NaN;
 
     useEffect(() => {
-        getAllSeasonsById(animeIdparam, setSeasons);
+        getAllSeasonsByAnimeId(animeIdparam, setSeasons);
     }, [animeIdparam]);
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -176,6 +175,7 @@ export const CrudSeasonbA = () => {
 
                 <Breadcrumbs className="dark">
                     <BreadcrumbItem> <Link to={`/crud`}>CRUD</Link> </BreadcrumbItem>
+                    <BreadcrumbItem><Link to={`/crud/books`}>Libros</Link></BreadcrumbItem>
                     <BreadcrumbItem><Link to={`/crud/animes`}>Animes</Link></BreadcrumbItem>
                     <BreadcrumbItem>Seasons</BreadcrumbItem>
                 </Breadcrumbs>

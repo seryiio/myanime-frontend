@@ -4,7 +4,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 
 import { useEffect, useMemo, useState } from "react";
 import { Genre } from "../../../interfaces/Genre";
-import { getGenres, urlGenres } from "../../../services/GenreService";
+import { URL_GENRES, getGenres } from "../../../services/GenreService";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -49,7 +49,7 @@ const CrudGenre = () => {
         try {
             if (method === "PUT") {
             } else {
-                await axios({ method: method, url: urlGenres, data: parameters });
+                await axios({ method: method, url: URL_GENRES, data: parameters });
             }
         } catch (error) {
             alert('Hubo un error');
@@ -59,7 +59,7 @@ const CrudGenre = () => {
 
     const deleteGenre = async (id: number | undefined) => {
         setId(id);
-        await axios({ method: 'DELETE', url: urlGenres + `/${id}`, data: id });
+        await axios({ method: 'DELETE', url: URL_GENRES + `/${id}`, data: id });
         getGenres(setGenres);
     }
 

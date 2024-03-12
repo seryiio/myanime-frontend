@@ -1,4 +1,4 @@
-import { AnimeGenre } from "./AnimeGenre";
+import { AnimeGenre } from "./BookGenre";
 
 export interface Genre {
     id?: number | undefined,

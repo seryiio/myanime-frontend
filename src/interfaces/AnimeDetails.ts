@@ -7,7 +7,6 @@ export interface AnimeDetails {
     title_english: string,
     synopsis: string,
     logo_image: string,
-    image: string,
     genres: Genre[],
     seasons: Season[]
 }

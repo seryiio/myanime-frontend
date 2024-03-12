@@ -53,14 +53,14 @@ input {
                 grid-row: 1/2;
 
                 .section-1__description--content {
-                    @apply flex flex-col justify-start items-center gap-4 lg:w-[20em] h-full;
+                    @apply flex flex-col justify-start items-center gap-4 lg:w-[20em] h-full m-8;
                 }
 
                 .title {
-                    @apply flex justify-center items-center py-8 lg:p-4;
+                    @apply flex justify-center items-center;
 
                     img {
-                        @apply w-[75%] lg:w-full;
+                        @apply w-full lg:w-full;
                     }
                 }
             }

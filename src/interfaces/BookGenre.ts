@@ -1,5 +1,5 @@
 export interface AnimeGenre {
     id?: number | undefined,
-    animeId?: number,
+    bookId?: number,
     genreId: number
 }

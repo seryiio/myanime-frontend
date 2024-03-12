@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Season } from "../../interfaces/Season";
-import { getSeasonsByIdForAnime } from "../../services/AnimeService";
+import { getSeasonBySeasonId } from "../../services/AnimeService";
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +16,7 @@ const SeasonData = () => {
 
 
     useEffect(() => {
-        getSeasonsByIdForAnime(animeId, seasonId, setAnimeSeasonsById);
+        getSeasonBySeasonId(animeId, seasonId, setAnimeSeasonsById);
     }, [seasonId]);
 
     console.log(animeSeasonById);
@@ -24,9 +24,11 @@ const SeasonData = () => {
     return (
         <>
             <section className="flex flex-col h-max">
-                <div className="relative top-0 left-0 flex w-full h-[50%]">
-                    <img src={animeSeasonById?.cover_image} className="w-full h-full overflow-hidden" alt="" />
-                    <div className="flex flex-col justify-end items-start h-full w-full absolute top-0 left-0 px-4 py-4 bg-gradient-to-t from-black from-25%">
+                <div className="relative top-0 left-0 flex w-full h-[16em] lg:h-[32em]">
+                    <picture className="w-full h-[16em] lg:h-[32em]">
+                        <img src={animeSeasonById?.cover_image} className="w-full h-full overflow-hidden" alt="" />
+                    </picture>
+                    <div className="flex flex-col justify-end items-start h-full w-full absolute top-0 left-0 px-4 py-4 bg-gradient-to-t from-black from-5%">
                         <h1>{animeSeasonById?.title_english}</h1>
                         <div className="flex justify-start items-center gap-8">
                             <div className="flex gap-2">
@@ -40,13 +42,9 @@ const SeasonData = () => {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 grid-rows-2-auto w-full place-content-between px-4 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 grid-rows-2-auto w-full place-content-between px-4 gap-8 bg-black">
                     <div className="flex flex-col gap-y-4">
                         <div className="flex justify-between items-center">
-                            <Button>
-                                <FontAwesomeIcon icon={faBookmark} />
-                                Agregar a Favoritos
-                            </Button>
                             <Button color="primary" className="text-[--bg-button] border-[--bg-button] hover:bg-[--bg-button]" variant="ghost">
                                 <FontAwesomeIcon icon={faPlus} />
                                 Agregar a Mi Lista

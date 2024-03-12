@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Season } from "../interfaces/Season";
 import { AnimeDetails } from "../interfaces/AnimeDetails";
+import { URL_ANIME } from "./AnimeService";
 
-export const URL_SEASON = 'http://192.168.1.89:8080/api/v1/seasons';
-export const URL_LAST_SEASON = 'http://192.168.1.89:8080/api/v1/lastseason';
-export const URL_SEASON_BY_ANIME = 'http://192.168.1.89:8080/api/v1/animegenres';
+export const URL_SEASON = 'https://myanime-backend.onrender.com/api/v1/seasons';
+export const URL_LAST_SEASON = 'https://myanime-backend.onrender.com/api/v1/animes/lastseason';
 
 export const getAllSeasons = async (setSeasons: React.Dispatch<React.SetStateAction<Season[]>>) => {
     try {
@@ -15,19 +15,10 @@ export const getAllSeasons = async (setSeasons: React.Dispatch<React.SetStateAct
     }
 }
 
-export const getAllSeasonsById = async (animeId: string | undefined, setSeasonsById: React.Dispatch<React.SetStateAction<Season[]>>) => {
+export const getAllSeasonsByAnimeId = async (animeId: string | undefined, setSeasonsById: React.Dispatch<React.SetStateAction<Season[]>>) => {
     try {
-        const response = await axios.get(URL_SEASON_BY_ANIME + `/${animeId}` + `/seasons`);
+        const response = await axios.get(URL_ANIME + `/${animeId}/seasons`);
         setSeasonsById(response.data);
-    } catch (error) {
-        console.error('Error al obtener la lista de temporadas de este anime', error);
-    }
-}
-
-export const getLastSeasonWithDataAnime = async (setLastSeasonWithDataAnime: React.Dispatch<React.SetStateAction<AnimeDetails[]>>) => {
-    try {
-        const response = await axios.get(URL_LAST_SEASON);
-        setLastSeasonWithDataAnime(response.data);
     } catch (error) {
         console.error('Error al obtener la lista de temporadas de este anime', error);
     }

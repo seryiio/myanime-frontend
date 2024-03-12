@@ -3,29 +3,27 @@ import './Home.scss'
 import { CardAnime } from '../../components/card/CardAnime';
 import { Anime } from '../../interfaces/Anime';
 import { Suspense, useEffect, useState } from 'react';
-import { getAnimes, getSeasonsByAnimeId } from '../../services/AnimeService';
+import { getAnimes, getLastSeasonByAnime, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { Season } from '../../interfaces/Season';
-import { getLastSeasonWithDataAnime } from '../../services/SeasonService';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
 export const Home = () => {
 
     const [animes, setAnimes] = useState<Anime[]>([]);
     const [animeId, setAnimeId] = useState<number | undefined>();
-    const [lastSeasonWithDataAnime, setLastSeasonWithDataAnime] = useState<AnimeDetails[]>([]);
+    const [lastSeasonByAnime, setLastSeasonByAnime] = useState<AnimeDetails[]>([]);
 
-    console.log(lastSeasonWithDataAnime);
+    console.log(lastSeasonByAnime);
 
     useEffect(() => {
         getAnimes(setAnimes);
-        getLastSeasonWithDataAnime(setLastSeasonWithDataAnime);
+        getLastSeasonByAnime(setLastSeasonByAnime);
     }, []);
 
     return (
@@ -37,7 +35,7 @@ export const Home = () => {
                         disableOnInteraction: false,
                     }} pagination={true} modules={[Autoplay, Pagination]} className="swiper-carousel-home">
                     {
-                        lastSeasonWithDataAnime.map((anime) => (
+                        lastSeasonByAnime.map((anime) => (
                             <SwiperSlide key={anime.id} className='swiper-carousel-home__slide'>
                                 <div className='swiper-carousel-home__slide--content'>
                                     <div className='opacity'></div>

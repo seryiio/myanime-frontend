@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import '@fontsource-variable/baloo-2';
 
@@ -24,7 +23,10 @@ import { NextUIProvider } from '@nextui-org/react';
 import SeasonData from './pages/seasonData/SeasonData.tsx';
 import CrudSong from './pages/crud/songs/CrudSong.tsx';
 import ListGenres from './pages/genre/ListGenres.tsx';
-import ListAnimesByGenre from './pages/anime/ListAnimesByGenre.tsx';
+import CrudBook from './pages/crud/books/CrudBook.tsx';
+import CrudAnimebB from './pages/crud/animes/CrudAnimebB.tsx';
+import ListBooks from './pages/book/ListBooksByGenre.tsx';
+import ListBooksByGenre from './pages/book/ListBooksByGenre.tsx';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +41,13 @@ const router = createBrowserRouter([
         path: 'crud/genres', element: <CrudGenre />
       },
       {
+        path: 'crud/books', element: <CrudBook />
+      },
+      {
         path: 'crud/animes', element: <CrudAnime />
+      },
+      {
+        path: 'crud/books/:id/animes', element: <CrudAnimebB />
       },
       {
         path: 'crud/animes/:id/seasons', element: <CrudSeasonbA />
@@ -57,7 +65,10 @@ const router = createBrowserRouter([
         path: 'genres', element: <ListGenres />
       },
       {
-        path: 'genres/:id', element: <ListAnimesByGenre />
+        path: 'books', element: <ListBooks />
+      },
+      {
+        path: 'genres/:id', element: <ListBooksByGenre />
       },
       {
         path: 'animes/:id', element: <AnimeData />

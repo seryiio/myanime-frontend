@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Song } from "../interfaces/Song";
-
-export const URL_SEASON = 'http://192.168.1.89:8080/api/v1/seasons';
+import { URL_SEASON } from "./SeasonService";
 
 export const getSongsBySeasonId = async (seasonId: string | undefined, setSongBySeasonId: React.Dispatch<React.SetStateAction<Song[]>>) => {
     try {

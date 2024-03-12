@@ -4,29 +4,23 @@ import '../Crud.scss'
 
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button, Tooltip, Pagination, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input, Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 
-import { faEye, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { Anime } from "../../../interfaces/Anime";
-import { getAnimes, URL_ANIME } from "../../../services/AnimeService";
 import { showAlert } from "../../../utils/Alert";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { URL_ANIME, getAnimesByBookId } from "../../../services/AnimeService";
+import { Anime } from "../../../interfaces/Anime";
 
-const CrudAnime = () => {
+export const CrudAnimebB = () => {
 
-    /**
-     * *USESTATE FOR USERINTERFACE
-     */
+    const bookIdparam = useParams().id;
+
     const [titleModal, setTitleModal] = useState('');
+    const [labelButton, setLabelButton] = useState('');
     const [operation, setOperation] = useState<number>(0);
 
-    /**
-     * *ALL USESTATE FOR ANIME SERVICE
-     */
     const [animes, setAnimes] = useState<Anime[]>([]);
-    /**
-     * *ATTRIBUTES FOR ANIME
-     */
     const [id, setId] = useState<number | undefined>();
     const [titleJapanese, setTitleJapanese] = useState('');
     const [titleEnglish, setTitleEnglish] = useState('');
@@ -35,14 +29,13 @@ const CrudAnime = () => {
     const [puntuation, setPuntuation] = useState(0);
     const [bookId, setBookId] = useState(0);
 
-    /**
-     * *ESTADOS NECESRIOS PARA EL MODAL DE MATERIALUI
-     */
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const convertIdBook = bookIdparam ? parseInt(bookIdparam) : NaN;
 
     useEffect(() => {
-        getAnimes(setAnimes);
-    }, []);
+        getAnimesByBookId(bookIdparam, setAnimes);
+    }, [bookIdparam]);
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [page, setPage] = useState(1);
     const rowsPerPage = 4;
@@ -56,7 +49,6 @@ const CrudAnime = () => {
     }, [page, animes]);
 
     const openModalRegister = (op: number) => {
-        setTitleModal('Registrar Anime');
         setId(0);
         setTitleJapanese('');
         setTitleEnglish('');
@@ -64,113 +56,87 @@ const CrudAnime = () => {
         setLogoImage('');
         setPuntuation(0);
         setBookId(0);
+        setTitleModal('Registrar Anime');
+        setLabelButton('Agregar');
         setOperation(op);
-
-        window.setTimeout(() => {
-            document.getElementById('name')?.focus();
-        }, 500);
     }
 
-    const openModalEdit = (op: number, id: number | undefined, titleJapanese: string, titleEnglish: string, synopsis: string, logoImage: string, puntuation: number, bookId: number) => {
+    const openModalEdit = (op: number, id: number | undefined, titleJapanese: string, titleEnglish: string, synopsis: string, logoImage: string, puntuation: number) => {
         setTitleModal('Editar Anime');
+        setLabelButton('Editar');
         setId(id);
         setTitleJapanese(titleJapanese);
         setTitleEnglish(titleEnglish);
         setSynopsis(synopsis);
         setLogoImage(logoImage);
         setPuntuation(puntuation);
-        setBookId(bookId);
+        setBookId(convertIdBook);
         setOperation(op);
-
-        window.setTimeout(() => {
-            document.getElementById('name')?.focus();
-        }, 500);
     }
-
-    /**
-     * * THIS FUNCTION IS USED FOR VALIDATE DATA INPUTS, IF IN THE CASE THE BUTTON RETURN PUT OR POST
-     */
-    const [isInvalid, setIsInvalid] = useState(false);
 
     const validate = () => {
         let parameters: Anime;
         let method: string;
+        if (operation === 1) {
+            parameters = {
+                title_japanese: titleJapanese.trim(),
+                title_english: titleEnglish.trim(),
+                synopsis: synopsis.trim(),
+                logo_image: logoImage.trim(),
+                puntuation: puntuation,
+                bookId: bookId
+            };
 
-        if (titleJapanese.trim() === '' || titleEnglish.trim() === ''
-            || synopsis.trim() === '') {
-            setIsInvalid(true);
+            method = 'POST';
         }
         else {
-
-            if (operation === 1) {
-                parameters = {
-                    title_japanese: titleJapanese.trim(),
-                    title_english: titleEnglish.trim(),
-                    synopsis: synopsis.trim(),
-                    logo_image: logoImage.trim(),
-                    puntuation: puntuation,
-                    bookId: bookId,
-                };
-
-                method = 'POST';
-            }
-            else {
-                parameters = {
-                    id: id,
-                    title_japanese: titleJapanese.trim(),
-                    title_english: titleEnglish.trim(),
-                    synopsis: synopsis.trim(),
-                    logo_image: logoImage.trim(),
-                    puntuation: puntuation,
-                    bookId: bookId,
-                };
-                method = 'PUT';
-            }
-            sendRequest(method, parameters);
-        };
+            parameters = {
+                title_japanese: titleJapanese.trim(),
+                title_english: titleEnglish.trim(),
+                synopsis: synopsis.trim(),
+                logo_image: logoImage.trim(),
+                puntuation: puntuation,
+                bookId: bookId
+            };
+            method = 'PUT';
+        }
+        sendRequest(method, parameters);
     }
 
+    const deleteAnime = async (id: number | undefined) => {
+        setId(id);
+        await axios({ method: 'DELETE', url: URL_ANIME + `/${id}`, data: id });
+        showAlert('Se elimino correctamente', 'success');
+        getAnimesByBookId(bookIdparam, setAnimes);
+    }
 
-    /**
-     * 
-     * * FUNCTION IS USED TO SEND DATA FOR EACH INPUT FROM THE MODAL, IF IS PUT OR POST REQUEST
-     */
     const sendRequest = async (method: string, parameters: Anime) => {
         if (method === 'PUT') {
             await axios({ method: method, url: URL_ANIME + `/${id}`, data: parameters });
             showAlert('Se actualizó correctamente', 'success');
         } else {
-            // CREATE ANIME AND OBTAIN ID
             await axios({ method: method, url: URL_ANIME, data: parameters });
             showAlert('Se registró correctamente', 'success');
         }
-        getAnimes(setAnimes);
+        getAnimesByBookId(bookIdparam, setAnimes);
     };
-
-    /**
-     * 
-     * * FUNCTION IS USED TO SEND DATA FOR EACH INPUT FROM THE MODAL, IF IS PUT OR POST REQUEST
-     */
-    const deleteAnime = async (id: number | undefined) => {
-        setId(id);
-        await axios({ method: 'DELETE', url: URL_ANIME + `/${id}`, data: id });
-        showAlert('Se elimino correctamente', 'success');
-        getAnimes(setAnimes);
-    }
 
     return (
         <>
-            <section className="create">
+            <section className="title">
+
                 <Breadcrumbs className="dark">
                     <BreadcrumbItem> <Link to={`/crud`}>CRUD</Link> </BreadcrumbItem>
+                    <BreadcrumbItem><Link to={`/crud/books`}>Libros</Link></BreadcrumbItem>
                     <BreadcrumbItem>Animes</BreadcrumbItem>
                 </Breadcrumbs>
                 <h1>Crear Animes</h1>
+
                 <Button color="success" onPress={onOpen} onClick={() => { openModalRegister(1) }}>Crear</Button>
             </section>
             <section className="list">
                 <h1>Lista de Animes</h1>
-                <Table isStriped
+                <Table
                     aria-label="Table Animes"
                     bottomContent={
                         <div className="flex w-full justify-center">
@@ -194,8 +160,7 @@ const CrudAnime = () => {
                         <TableColumn>TÍTULO INGLÉS</TableColumn>
                         <TableColumn>SINOPSIS</TableColumn>
                         <TableColumn>LOGO</TableColumn>
-                        <TableColumn>PUNTUACIÓN</TableColumn>
-                        <TableColumn>BOOK ID</TableColumn>
+                        <TableColumn>PUNTUACION</TableColumn>
                         <TableColumn>TEMPORADAS</TableColumn>
                         <TableColumn>OPCIONES</TableColumn>
                     </TableHeader>
@@ -214,20 +179,20 @@ const CrudAnime = () => {
                                                 <img src={anime.logo_image} width={56} alt={anime.title_english} />
                                             </TableCell>
                                             <TableCell>{anime.puntuation}</TableCell>
-                                            <TableCell>{anime.bookId}</TableCell>
                                             <TableCell>
                                                 <Tooltip content="Ver Temporadas">
-                                                    <Link to={`${anime.id}/seasons`}>
-
+                                                    <Link to={`/crud/animes/${anime.id}/seasons`}>
                                                         <span className="text-lg cursor-pointer active:opacity-50">
                                                             <FontAwesomeIcon icon={faEye} />
                                                         </span>
                                                     </Link>
                                                 </Tooltip>
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell className="flex gap-2">
                                                 <Tooltip content="Editar">
-                                                    <Button className="bg-transparent" onPress={onOpen} onClick={() => { openModalEdit(2, anime.id, anime.title_japanese, anime.title_english, anime.synopsis, anime.logo_image, anime.puntuation, anime.bookId) }}>
+                                                    <Button className="bg-transparent" onPress={onOpen} onClick={() => {
+                                                        openModalEdit(2, anime.id, anime.title_japanese, anime.title_english, anime.synopsis, anime.logo_image, anime.puntuation)
+                                                    }}>
                                                         <span className="text-lg cursor-pointer active:opacity-50">
                                                             <FontAwesomeIcon icon={faPenToSquare} />
                                                         </span>
@@ -248,8 +213,11 @@ const CrudAnime = () => {
                         ) : <TableBody emptyContent={"No hay contenido."}>{[]}</TableBody>
                     }
                 </Table>
-            </section>
+
+            </section >
+
             <Modal
+                size="5xl"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="top-center"
@@ -258,61 +226,52 @@ const CrudAnime = () => {
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">{titleModal}</ModalHeader>
-                            <ModalBody>
+                            <ModalBody className="formSeasonbA">
                                 <Input
+                                    className="form__inputTitleJapanese"
                                     autoFocus
                                     label="Título Japonés"
                                     variant="bordered"
                                     value={titleJapanese}
-                                    isInvalid={isInvalid}
-                                    color={isInvalid ? "danger" : "default"}
-                                    errorMessage={isInvalid && "Agregue un titulo en japonés"}
                                     onChange={(e) => setTitleJapanese(e.target.value)}
                                 />
                                 <Input
+                                    className="form__inputTitleEnglish"
                                     label="Título Inglés"
                                     variant="bordered"
                                     value={titleEnglish}
-                                    isInvalid={isInvalid}
-                                    color={isInvalid ? "danger" : "default"}
-                                    errorMessage={isInvalid && "Agregue un título en inglés"}
                                     onChange={(e) => setTitleEnglish(e.target.value)}
                                 />
                                 <Input
+                                    className="form__inputDescription"
                                     label="Sinopsis"
                                     variant="bordered"
                                     value={synopsis}
-                                    isInvalid={isInvalid}
-                                    color={isInvalid ? "danger" : "default"}
-                                    errorMessage={isInvalid && "Agregue una sinopsis"}
                                     onChange={(e) => setSynopsis(e.target.value)}
                                 />
                                 <Input
+                                    className="form__inputDescription"
                                     label="Logo"
                                     variant="bordered"
                                     value={logoImage}
-                                    isInvalid={isInvalid}
-                                    color={isInvalid ? "danger" : "default"}
-                                    errorMessage={isInvalid && "Agregue la imagen del logo"}
                                     onChange={(e) => setLogoImage(e.target.value)}
                                 />
                                 <Input
+                                    className="form__inputDescription"
+                                    label="Logo"
+                                    variant="bordered"
+                                    value={logoImage}
+                                    onChange={(e) => setLogoImage(e.target.value)}
+                                />
+
+                                <Input
                                     type="number"
-                                    className="formAnime__input-puntuation"
+                                    className="formBook__input-puntuation"
                                     autoFocus
-                                    label="Puntuación"
+                                    label="Puntacion"
                                     variant="bordered"
                                     value={puntuation.toString()}
                                     onChange={(e) => setPuntuation(parseInt(e.target.value))}
-                                />
-                                <Input
-                                    type="number"
-                                    className="formAnime__input-bookId"
-                                    autoFocus
-                                    label="Book ID"
-                                    variant="bordered"
-                                    value={bookId.toString()}
-                                    onChange={(e) => setBookId(parseInt(e.target.value))}
                                 />
                             </ModalBody>
                             <ModalFooter>
@@ -320,7 +279,7 @@ const CrudAnime = () => {
                                     Cerrar
                                 </Button>
                                 <Button type="submit" color="primary" onPress={onOpen} onClick={() => { validate() }}>
-                                    Agregar
+                                    {labelButton}
                                 </Button>
                             </ModalFooter>
                         </>
@@ -331,4 +290,4 @@ const CrudAnime = () => {
     )
 }
 
-export default CrudAnime;
+export default CrudAnimebB;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import './AnimeData.scss'
 import 'swiper/css';
@@ -7,41 +7,51 @@ import 'swiper/css/pagination';
 
 import { Link, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { AnimeGenre } from '../../interfaces/AnimeGenre';
-import { getAnimeGenresById, getAnimeSeasonsById } from '../../services/AnimeService';
+import { AnimeGenre } from '../../interfaces/BookGenre';
+import { getAnimeById, getLastSeasonByAnime, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Anime } from '../../interfaces/Anime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Season } from '../../interfaces/Season';
+import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
 export const AnimeData = () => {
 
     const ADD_LIST = "Agregar a mi lista";
     const ADD_FAVORITE = "Agregar a mis favoritos";
 
-    const animeId = useParams().id;
+    const animeIdParam = useParams().id;
 
-    const [animeGenresById, setAnimeGenresById] = useState<Anime | null>(null);
+    const [animeId, setAnimeById] = useState<Anime | null>(null);
     const [animeSeasonById, setAnimeSeasonsById] = useState<Season[]>([]);
+    const [lastSeasonByAnime, setLastSeasonByAnimeId] = useState<AnimeDetails[]>([]);
 
     useEffect(() => {
-        getAnimeGenresById(animeId, setAnimeGenresById);
-        getAnimeSeasonsById(animeId, setAnimeSeasonsById);
-    }, [animeId]);
+        getAnimeById(animeIdParam, setAnimeById);
+        getSeasonsByAnimeId(animeIdParam, setAnimeSeasonsById);
+        getLastSeasonByAnimeId(animeIdParam, setLastSeasonByAnimeId);
+    }, [animeIdParam]);
+    console.log(lastSeasonByAnime);
     return (
         <>
             <section className="grid lg:grid-cols-3-max-content-center w-full h-max gap-4">
                 <div className='relative top-0 left-0 flex justify-center items-center w-full h-full p-4'>
-                    <picture className='z-30'>
-                        <img src={animeGenresById?.image} className='object-cover h-full w-64' alt="" />
-                    </picture>
-                    <div className='opacity absolute top-0 left-0 w-full h-full bg-transparent/40 z-20'></div>
-                    <div className='absolute top-0 left-0 w-full h-full blur-sm z-10'>
-                        <img src={animeGenresById?.image} className='w-full h-full' alt="" />
-                    </div>
-                </div>
+                    {
+                        lastSeasonByAnime.seasons && lastSeasonByAnime.seasons.map((season) => (
+                            <Fragment key={season.id}>
+                                <picture className='z-30'>
+                                    <img src={season.image} className='object-cover h-full w-64' alt="" />
+                                </picture>
+                                <div className='opacity absolute top-0 left-0 w-full h-full bg-transparent/40 z-20'></div>
+                                <div className='absolute top-0 left-0 w-full h-full blur-sm z-10'>
+                                    <img src={season?.image} className='w-full h-full' alt="" />
+                                </div>
+                            </Fragment>
+                        ))
+                    }
+                </div >
                 <div className='flex flex-col justify-center items-center text-center gap-2 flex-1 p-4'>
                     <motion.div
                         className='title flex-col flex justify-center items-center'
@@ -50,7 +60,7 @@ export const AnimeData = () => {
                         exit={{ opacity: 1 }}
                         transition={{ duration: 1.5 }}
                     >
-                        <img src={animeGenresById?.logo_image} width={350} alt="" /></motion.div>
+                        <img src={animeId?.logo_image} width={350} alt="" /></motion.div>
                     <div className="save-anime flex flex-wrap justify-center lg:justify-between items-center gap-y-4 gap-x-10">
                         <a href="" className='flex justify-center items-center gap-2'>
                             <FontAwesomeIcon icon={faBookmark} style={{ color: "#ffffff", }} />
@@ -62,7 +72,7 @@ export const AnimeData = () => {
                         </a>
                     </div>
                     <div className="genres">
-                        {animeGenresById?.genres.map((genre) => (
+                        {animeId?.genres.map((genre) => (
                             <span key={genre.id} className="w-max bg-cyan-400 text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded">
                                 {genre.name}</span>
                         ))}
@@ -74,9 +84,9 @@ export const AnimeData = () => {
             </section >
             <section className='description text-left p-4'>
                 <h2>Sinopsis</h2>
-                <p>{animeGenresById?.synopsis}</p>
+                <p>{animeId?.synopsis}</p>
             </section>
-            <section className=" content w-full px-4 pt-8">
+            <section className=" content w-full">
                 <h1>Temporadas</h1>
                 {
                     animeSeasonById.length ? (
@@ -101,13 +111,13 @@ export const AnimeData = () => {
                         >
                             {
                                 animeSeasonById.map((season) => (
-                                    <SwiperSlide key={season.id} className='content-swiper-slide__card'>
+                                    <SwiperSlide key={season.id} className='content-swiper-slide__card '>
                                         <Link to={`seasons/${season.id}`}>
-                                            <div className="card">
-                                                <div className="card__img">
-                                                    <img src={season.image} alt={season.title_english} />
+                                            <div className="card h-72">
+                                                <div className="card__img h-64">
+                                                    <img src={season.image} alt={season.title_english} className='w-full h-full' />
                                                 </div>
-                                                <div className="card__description">
+                                                <div className="card__description text-white">
                                                     {season.title_english}
                                                 </div>
                                             </div>

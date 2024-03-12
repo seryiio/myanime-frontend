@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { Box, Button, Checkbox, DialogTitle, FormControl, FormLabel, Input, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
+import { useEffect, useMemo, useState } from "react";
 import { Season } from "../../../interfaces/Season";
 import { URL_SEASON, getAllSeasons } from "../../../services/SeasonService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import ModalDialog from "@mui/joy/ModalDialog";
+import { faEye, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { showAlert } from "../../../utils/Alert";
+import { BreadcrumbItem, Breadcrumbs, Button, Checkbox, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Pagination, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 
 export const CrudSeason = () => {
     const [titleModal, setTitleModal] = useState('');
@@ -16,15 +15,35 @@ export const CrudSeason = () => {
     const [seasons, setSeasons] = useState<Season[]>([]);
     const [id, setId] = useState<number | undefined>();
     const [number, setNumber] = useState(0);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [description, setDescription] = useState('');
+    const [titleJapanese, setTitleJapanese] = useState('');
+    const [titleEnglish, setTitleEnglish] = useState('');
+    const [synopsis, setSynopsis] = useState('');
+    const [year, setYear] = useState(0);
+    const [seasonYear, setSeasonYear] = useState('');
+    const [type, setType] = useState('');
+    const [studio, setStudio] = useState('');
+    const [image, setImage] = useState('');
+    const [coverImage, setCoverImage] = useState('');
+    const [coverImageSecondary, setCoverImageSecondary] = useState('');
+    const [urlTrailer, setUrlTrailer] = useState('');
     const [status, setStatus] = useState(false);
-    const [animeId, setAnimeId] = useState(0);
 
     useEffect(() => {
         getAllSeasons(setSeasons);
     }, []);
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const [page, setPage] = useState(1);
+    const rowsPerPage = 4;
+
+    const pages = Math.ceil(seasons.length / rowsPerPage);
+    const items = useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return seasons.slice(start, end);
+    }, [page, seasons]);
 
 
     /**
@@ -37,22 +56,37 @@ export const CrudSeason = () => {
     const openModalRegister = (op: number) => {
         setId(0);
         setNumber(0);
-        setStartDate('');
-        setEndDate('');
-        setDescription('');
+        setTitleJapanese('');
+        setTitleEnglish('');
+        setSynopsis('');
+        setYear(0);
+        setSeasonYear('');
+        setType('');
+        setStudio('');
+        setImage('');
+        setCoverImage('');
+        setCoverImageSecondary('');
+        setUrlTrailer('');
         setStatus(false);
         setTitleModal('Registrar Temporada');
         setOperation(op);
     }
 
-    const openModalEdit = (op: number, id: number | undefined, number: number, start_date: string, end_date: string, description: string, animeId: number, status: boolean) => {
+    const openModalEdit = (op: number, id: number | undefined, number: number, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, type: string, studio: string, image: string, coverImage: string, coverImageSecondary: string, urlTrailer: string, status: boolean) => {
         setTitleModal('Editar Temporada');
         setId(id);
         setNumber(number);
-        setStartDate(start_date);
-        setEndDate(end_date);
-        setDescription(description);
-        setAnimeId(animeId);
+        setTitleJapanese(titleJapanese);
+        setTitleEnglish(titleEnglish);
+        setSynopsis(synopsis);
+        setYear(year);
+        setSeasonYear(seasonYear);
+        setType(type);
+        setStudio(studio);
+        setImage(image);
+        setCoverImage(coverImage);
+        setCoverImageSecondary(coverImageSecondary);
+        setUrlTrailer(urlTrailer);
         setStatus(status);
         setOperation(op);
     }
@@ -63,10 +97,18 @@ export const CrudSeason = () => {
         if (operation === 1) {
             parameters = {
                 number: number,
-                start_date: startDate.trim(),
-                end_date: endDate.trim(),
-                description: description.trim(),
-                animeId: animeId,
+                title_japanese: titleJapanese.trim(),
+                title_english: titleEnglish.trim(),
+                synopsis: synopsis.trim(),
+                year: year,
+                season_year: seasonYear.trim(),
+                type: type.trim(),
+                studio: studio.trim(),
+                image: image.trim(),
+                cover_image: coverImage.trim(),
+                cover_image_secondary: coverImageSecondary.trim(),
+                url_trailer: urlTrailer.trim(),
+                animeId: convertIdAnime,
                 status: status,
             };
 
@@ -75,10 +117,18 @@ export const CrudSeason = () => {
         else {
             parameters = {
                 number: number,
-                start_date: startDate.trim(),
-                end_date: endDate.trim(),
-                description: description.trim(),
-                animeId: animeId,
+                title_japanese: titleJapanese.trim(),
+                title_english: titleEnglish.trim(),
+                synopsis: synopsis.trim(),
+                year: year,
+                season_year: seasonYear.trim(),
+                type: type.trim(),
+                studio: studio.trim(),
+                image: image.trim(),
+                cover_image: coverImage.trim(),
+                cover_image_secondary: coverImageSecondary.trim(),
+                url_trailer: urlTrailer.trim(),
+                animeId: convertIdAnime,
                 status: status,
             };
             method = 'PUT';
@@ -108,143 +158,253 @@ export const CrudSeason = () => {
     return (
         <>
             <section className="title">
+
+                <Breadcrumbs className="dark">
+                    <BreadcrumbItem> <Link to={`/crud`}>CRUD</Link> </BreadcrumbItem>
+                    <BreadcrumbItem><Link to={`/crud/books`}>Libros</Link></BreadcrumbItem>
+                    <BreadcrumbItem><Link to={`/crud/animes`}>Animes</Link></BreadcrumbItem>
+                    <BreadcrumbItem>Seasons</BreadcrumbItem>
+                </Breadcrumbs>
                 <h1>Crear Temporadas</h1>
 
-                <Button variant="contained" color="success" onClick={() => { handleOpen(); openModalRegister(1) }}>Crear</Button>
+                <Button color="success" onPress={onOpen} onClick={() => { openModalRegister(1) }}>Crear</Button>
             </section>
             <section className="list">
                 <h1>Lista de Temporadas</h1>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>Numero</TableCell>
-                                <TableCell>Inicio</TableCell>
-                                <TableCell>Fin</TableCell>
-                                <TableCell>Descripcion</TableCell>
-                                <TableCell>AnimeID</TableCell>
-                                <TableCell>Status</TableCell>
-                                <TableCell>Opciones</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        {seasons.length > 0 ? (
-                            <TableBody>
-                                {seasons.map((season) => (
-                                    <TableRow
-                                        key={season.id}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {season.id}
-                                        </TableCell>
-                                        <TableCell>{season.number}</TableCell>
-                                        <TableCell>{season.start_date}</TableCell>
-                                        <TableCell>{season.end_date}</TableCell>
-                                        <TableCell>{season.description}</TableCell>
-                                        <TableCell>{season.animeId}</TableCell>
-                                        <TableCell>{season.status ? 'true' : 'false'}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                color="warning"
-                                                onClick={() => { handleOpen(); openModalEdit(2, season.id, season.number, season.start_date, season.end_date, season.description, season.animeId, season.status) }}
-                                            >
-                                                <FontAwesomeIcon icon={faPenToSquare} />
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                color="error"
-                                                onClick={() => deleteSeason(season.id)}
-                                            >
-                                                <FontAwesomeIcon icon={faTrash} />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        ) : (
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell colSpan={12} className="italic text-gray-500">
-                                        No hay resultados
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        )}
-                    </Table>
-                </TableContainer>
+                <Table
+                    aria-label="Table Animes"
+                    bottomContent={
+                        <div className="flex w-full justify-center">
+                            <Pagination
+                                isCompact
+                                showControls
+                                showShadow
+                                color="secondary"
+                                page={page}
+                                total={pages}
+                                onChange={(page) => setPage(page)}
+                            />
+                        </div>
+                    }
+                    classNames={{
+                        wrapper: "min-h-[222px]",
+                    }}>
+                    <TableHeader>
+                        <TableColumn>ID</TableColumn>
+                        <TableColumn>NÚMERO</TableColumn>
+                        <TableColumn>TÍTULO JAPONES</TableColumn>
+                        <TableColumn>TÍTULO INGLÉS</TableColumn>
+                        <TableColumn>SINOPSIS</TableColumn>
+                        <TableColumn>AÑO</TableColumn>
+                        <TableColumn>TEMPORADA</TableColumn>
+                        <TableColumn>TIPO</TableColumn>
+                        <TableColumn>STUDIO</TableColumn>
+                        <TableColumn>IMAGEN</TableColumn>
+                        <TableColumn>COVER IMAGE</TableColumn>
+                        <TableColumn>COVER IMAGE SECONDARY</TableColumn>
+                        <TableColumn>URL TRAILER</TableColumn>
+                        <TableColumn>ESTADO</TableColumn>
+                        <TableColumn>CANCIONES</TableColumn>
+                        <TableColumn>EPISODIOS</TableColumn>
+                        <TableColumn>OPCIONES</TableColumn>
+                    </TableHeader>
 
-            </section>
+                    {
+                        items.length ? (
+                            <TableBody items={items}>
+                                {
+                                    (season) => (
+                                        <TableRow key={season.id}>
+                                            <TableCell>{season.id}</TableCell>
+                                            <TableCell>{season.number}</TableCell>
+                                            <TableCell>{season.title_japanese}</TableCell>
+                                            <TableCell>{season.title_english}</TableCell>
+                                            <TableCell>{season.synopsis}</TableCell>
+                                            <TableCell>{season.year}</TableCell>
+                                            <TableCell>{season.season_year}</TableCell>
+                                            <TableCell>{season.type}</TableCell>
+                                            <TableCell>{season.studio}</TableCell>
+                                            <TableCell>
+                                                <img src={season.image} width={56} alt={season.title_english} />
+                                            </TableCell>
+                                            <TableCell>
+                                                <img src={season.cover_image} width={56} alt={season.title_english} />
+                                            </TableCell>
+                                            <TableCell>
+                                                <img src={season.cover_image_secondary} width={56} alt={season.title_english} />
+                                            </TableCell>
+                                            <TableCell>{season.url_trailer}</TableCell>
+                                            <TableCell>{season.status ? <Chip color="success">En Emisión</Chip> : <Chip color="danger">Terminado</Chip>}</TableCell>
+                                            <TableCell>
+                                                <Tooltip content="Ver Canciones">
+                                                    <Link to={`${season.id}/songs`}>
 
-            <Modal className="modal"
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faEye} />
+                                                        </span>
+                                                    </Link>
+                                                </Tooltip>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Tooltip content="Ver Temporadas">
+                                                    <Link to={`${season.id}/episodes`}>
+
+                                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faEye} />
+                                                        </span>
+                                                    </Link>
+                                                </Tooltip>
+                                            </TableCell>
+                                            <TableCell className="flex gap-2">
+                                                <Tooltip content="Editar">
+                                                    <Button className="bg-transparent" onPress={onOpen} onClick={() => {
+                                                        openModalEdit(2, season.id, season.number, season.title_japanese, season.title_english, season.synopsis, season.year, season.season_year, season.type, season.studio, season.image, season.cover_image, season.cover_image_secondary, season.url_trailer,
+                                                            season.status)
+                                                    }}>
+                                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faPenToSquare} />
+                                                        </span>
+                                                    </Button>
+                                                </Tooltip>
+                                                <Tooltip content="Eliminar">
+                                                    <Button className="bg-transparent" onClick={() => deleteSeason(season.id)}>
+                                                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </span>
+                                                    </Button>
+                                                </Tooltip>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                }
+                            </TableBody>
+                        ) : <TableBody emptyContent={"No hay contenido."}>{[]}</TableBody>
+                    }
+                </Table>
+
+            </section >
+
+            <Modal
+                size="5xl"
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                placement="top-center"
             >
-                <Box>
-                    <ModalDialog
-                        className="modal__dialog" sx={{ width: 922 }}>
-                        <DialogTitle className="modal__dialog--title" >{titleModal}</DialogTitle>
-                        <form
-                            className="modal__dialog--form"
-                            onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-                                event.preventDefault();
-                                setOpen(false);
-                            }}
-                        >
-                            <Stack spacing={{ xs: 1, sm: 2 }}>
-                                <Stack spacing={{ xs: 1, sm: 4 }} direction="row" useFlexGap flexWrap="wrap">
-                                    <FormControl className="form">
-                                        <FormLabel>Numero</FormLabel>
-                                        <NumberInput
-                                            aria-label="Demo number input"
-                                            placeholder="Type a number…"
-                                            value={number}
-                                            onChange={(event, val) => setNumber(val)}
-                                        />
-                                    </FormControl>
-                                    <FormControl className="modal__form--year flex-1">
-                                        <FormLabel>Descripción</FormLabel>
-                                        <Input required type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                                    </FormControl>
-                                </Stack>
-                                <Stack spacing={{ xs: 1, sm: 4 }} direction="row" useFlexGap flexWrap="wrap">
-                                    <FormControl className="form flex-1">
-                                        <FormLabel>Inicio</FormLabel>
-                                        <Input autoFocus required type="date" id="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                                    </FormControl>
-                                    <FormControl className="modal__form--year flex-1">
-                                        <FormLabel>Fin</FormLabel>
-                                        <Input required type="date" id="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                                    </FormControl>
-                                </Stack>
-                                <Stack spacing={{ xs: 1, sm: 4 }} direction="row" useFlexGap flexWrap="wrap">
-                                    <FormControl className="modal__form--status">
-                                        <FormLabel>Status</FormLabel>
-                                        <Checkbox
-                                            id="status"
-                                            checked={status}
-                                            onChange={(e) => setStatus(e.target.checked)} />
-                                    </FormControl>
-                                    <FormControl className="modal__form--year flex-1">
-                                        <FormLabel>Anime</FormLabel>
-                                        <NumberInput
-                                            required
-                                            id="animeId"
-                                            aria-label="Demo number input"
-                                            placeholder="Type a number…"
-                                            value={animeId}
-                                            onChange={(event, val) => setAnimeId(val)}
-                                        />
-                                    </FormControl>
-                                </Stack>
-                                <Button variant="contained" color="success" type="submit" onClick={() => { validate(); handleOpen(); }}>Enviar</Button>
-                            </Stack>
-                        </form>
-                    </ModalDialog>
-                </Box >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">{titleModal}</ModalHeader>
+                            <ModalBody className="formSeasonbA">
+                                <Input
+                                    type="number"
+                                    className="form__inputNumber"
+                                    autoFocus
+                                    label="Número"
+                                    variant="bordered"
+                                    value={number.toString()}
+                                    onChange={(e) => setNumber(parseInt(e.target.value))}
+                                />
+                                <Input
+                                    className="form__inputTitleJapanese"
+                                    autoFocus
+                                    label="Título Japonés"
+                                    variant="bordered"
+                                    value={titleJapanese}
+                                    onChange={(e) => setTitleJapanese(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputTitleEnglish"
+                                    label="Título Inglés"
+                                    variant="bordered"
+                                    value={titleEnglish}
+                                    onChange={(e) => setTitleEnglish(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputDescription"
+                                    label="Sinopsis"
+                                    variant="bordered"
+                                    value={synopsis}
+                                    onChange={(e) => setSynopsis(e.target.value)}
+                                />
+                                <Input
+                                    type="number"
+                                    className="form__inputYear"
+                                    label="Año"
+                                    variant="bordered"
+                                    value={(year).toString()}
+                                    onChange={(e) => setYear(parseInt(e.target.value))}
+                                />
+                                <Select
+                                    className="form__inputSeasonYear"
+                                    label="Estación del año"
+                                    variant="bordered"
+                                    selectedKeys={[seasonYear]}
+                                    onChange={(handleSelectionSeasonYearChange)}
+                                >
+                                    {
+                                        SEASON_LIST.map(sl => (
+                                            <SelectItem key={sl} value={sl}>{sl}</SelectItem>
+                                        ))
+                                    }
+                                </Select>
+                                <Select
+                                    className="form__inputType"
+                                    label="Tipo"
+                                    variant="bordered"
+                                    selectedKeys={[type]}
+                                    onChange={(handleSelectionTypeChange)}
+                                >
+                                    <SelectItem key={"TV"} value={"TV"}>TV</SelectItem>
+                                    <SelectItem key={"Movie"} value={"Movie"}>Movie</SelectItem>
+                                </Select>
+                                <Input
+                                    className="form__inputStudio"
+                                    label="Studio"
+                                    variant="bordered"
+                                    value={studio}
+                                    onChange={(e) => setStudio(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputImage"
+                                    label="Imagen"
+                                    variant="bordered"
+                                    value={image}
+                                    onChange={(e) => setImage(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputCoverImage"
+                                    label="Cover Imagen"
+                                    variant="bordered"
+                                    value={coverImage}
+                                    onChange={(e) => setCoverImage(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputCoverImageSecondary"
+                                    label="Cover Imagen Secondary"
+                                    variant="bordered"
+                                    value={coverImageSecondary}
+                                    onChange={(e) => setCoverImageSecondary(e.target.value)}
+                                />
+                                <Input
+                                    className="form__inputUrlTrailer"
+                                    label="URL Trailer"
+                                    variant="bordered"
+                                    value={urlTrailer}
+                                    onChange={(e) => setUrlTrailer(e.target.value)}
+                                />
+                                <Checkbox isSelected={status} className="form__CheckboxStatus" onChange={(e) => setStatus(e.target.checked)}>Estado</Checkbox>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="flat" onPress={onClose}>
+                                    Cerrar
+                                </Button>
+                                <Button type="submit" color="primary" onPress={onOpen} onClick={() => { validate() }}>
+                                    {labelButton}
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
             </Modal >
         </>
     )
