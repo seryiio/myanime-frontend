@@ -63,7 +63,7 @@ export const getLastSeasonByAnime = async (setLastSeasonByAnime: React.Dispatch<
     }
 };
 
-export const getLastSeasonByAnimeId = async (animeId: string | undefined, setLastSeasonByAnimeId: React.Dispatch<React.SetStateAction<AnimeDetails[]>>) => {
+export const getLastSeasonByAnimeId = async (animeId: string | undefined, setLastSeasonByAnimeId: React.Dispatch<React.SetStateAction<AnimeDetails | undefined>>) => {
     try {
         const response = await axios.get(`${URL_ANIME}/${animeId}/lastseason`);
         setLastSeasonByAnimeId(response.data);

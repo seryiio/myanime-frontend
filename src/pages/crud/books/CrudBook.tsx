@@ -91,25 +91,25 @@ const CrudBook = () => {
         }, 500);
     }
 
-    const openModalEdit = (op: number, id: number | undefined, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, bookType: string, author: string, status: string, puntuation: number, genres: Selection) => {
-        setTitleModal('Editar Libro');
-        setId(id);
-        setTitleJapanese(titleJapanese);
-        setTitleEnglish(titleEnglish);
-        setSynopsis(synopsis);
-        setYear(year);
-        setSeasonYear(seasonYear);
-        setBookType(bookType);
-        setAuthor(author);
-        setStatus(status);
-        setPuntuation(puntuation);
-        setSelectedGenreIdSet(genres);
-        setOperation(op);
+    // const openModalEdit = (op: number, id: number | undefined, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, bookType: string, author: string, status: string, puntuation: number, genres: Selection) => {
+    //     setTitleModal('Editar Libro');
+    //     setId(id);
+    //     setTitleJapanese(titleJapanese);
+    //     setTitleEnglish(titleEnglish);
+    //     setSynopsis(synopsis);
+    //     setYear(year);
+    //     setSeasonYear(seasonYear);
+    //     setBookType(bookType);
+    //     setAuthor(author);
+    //     setStatus(status);
+    //     setPuntuation(puntuation);
+    //     setSelectedGenreIdSet(genres);
+    //     setOperation(op);
 
-        window.setTimeout(() => {
-            document.getElementById('name')?.focus();
-        }, 500);
-    }
+    //     window.setTimeout(() => {
+    //         document.getElementById('name')?.focus();
+    //     }, 500);
+    // }
 
     /**
      * * THIS FUNCTION IS USED FOR VALIDATE DATA INPUTS, IF IN THE CASE THE BUTTON RETURN PUT OR POST
@@ -341,7 +341,9 @@ const CrudBook = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <Tooltip content="Editar">
-                                                    <Button className="bg-transparent" onPress={onOpen} onClick={() => { openModalEdit(2, book.id, book.title_japanese, book.title_english, book.synopsis, book.year, book.season_year, book.book_type, book.author, book.status, book.puntuation) }}>
+                                                    <Button className="bg-transparent" onPress={onOpen} 
+                                                    // onClick={() => { openModalEdit(2, book.id, book.title_japanese, book.title_english, book.synopsis, book.year, book.season_year, book.book_type, book.author, book.status, book.puntuation, book.genres) }}
+                                                    >
                                                         <span className="text-lg cursor-pointer active:opacity-50">
                                                             <FontAwesomeIcon icon={faPenToSquare} />
                                                         </span>
@@ -481,7 +483,7 @@ const CrudBook = () => {
                                     errorMessage={isInvalid && "Seleccione un género"}
                                 >
                                     {genres.map((genre) => (
-                                        <SelectItem key={genre.id} value={genre.id}>
+                                        <SelectItem key={genre.name} value={genre.id}>
                                             {genre.name}
                                         </SelectItem>
                                     ))}

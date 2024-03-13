@@ -1,17 +1,10 @@
-import React, { FunctionComponent, useState } from "react";
-
 import './BottomNavBar.scss'
 
-import Logo from '../../assets/images/Branding/Logo.svg';
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCompass, faHouse, faLayerGroup, faMagnifyingGlass, faSearch, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCompass, faHouse, faLayerGroup, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-
-
-
     return (
         <>
             <div className="flex justify-between items-center px-4 py-4 gap-8 text-white z-[999]">

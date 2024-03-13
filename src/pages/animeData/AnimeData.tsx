@@ -7,8 +7,7 @@ import 'swiper/css/pagination';
 
 import { Link, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { AnimeGenre } from '../../interfaces/BookGenre';
-import { getAnimeById, getLastSeasonByAnime, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
+import { getAnimeById, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Anime } from '../../interfaces/Anime';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -26,30 +25,31 @@ export const AnimeData = () => {
 
     const [animeId, setAnimeById] = useState<Anime | null>(null);
     const [animeSeasonById, setAnimeSeasonsById] = useState<Season[]>([]);
-    const [lastSeasonByAnime, setLastSeasonByAnimeId] = useState<AnimeDetails[]>([]);
+    const [lastSeasonByAnimeId, setLastSeasonByAnimeId] = useState<AnimeDetails | undefined>();
 
     useEffect(() => {
         getAnimeById(animeIdParam, setAnimeById);
         getSeasonsByAnimeId(animeIdParam, setAnimeSeasonsById);
         getLastSeasonByAnimeId(animeIdParam, setLastSeasonByAnimeId);
     }, [animeIdParam]);
-    console.log(lastSeasonByAnime);
     return (
         <>
             <section className="grid lg:grid-cols-3-max-content-center w-full h-max gap-4">
                 <div className='relative top-0 left-0 flex justify-center items-center w-full h-full p-4'>
                     {
-                        lastSeasonByAnime.seasons && lastSeasonByAnime.seasons.map((season) => (
-                            <Fragment key={season.id}>
-                                <picture className='z-30'>
-                                    <img src={season.image} className='object-cover h-full w-64' alt="" />
-                                </picture>
-                                <div className='opacity absolute top-0 left-0 w-full h-full bg-transparent/40 z-20'></div>
-                                <div className='absolute top-0 left-0 w-full h-full blur-sm z-10'>
-                                    <img src={season?.image} className='w-full h-full' alt="" />
-                                </div>
-                            </Fragment>
-                        ))
+                        lastSeasonByAnimeId && (
+                            lastSeasonByAnimeId.seasons && lastSeasonByAnimeId.seasons.map((season) => (
+                                <Fragment key={season.id}>
+                                    <picture className='z-30'>
+                                        <img src={season.image} className='object-cover h-full w-64' alt="" />
+                                    </picture>
+                                    <div className='opacity absolute top-0 left-0 w-full h-full bg-transparent/40 z-20'></div>
+                                    <div className='absolute top-0 left-0 w-full h-full blur-sm z-10'>
+                                        <img src={season?.image} className='w-full h-full' alt="" />
+                                    </div>
+                                </Fragment>
+                            ))
+                        )
                     }
                 </div >
                 <div className='flex flex-col justify-center items-center text-center gap-2 flex-1 p-4'>
@@ -72,7 +72,7 @@ export const AnimeData = () => {
                         </a>
                     </div>
                     <div className="genres">
-                        {animeId?.genres.map((genre) => (
+                        {animeId?.genres?.map((genre) => (
                             <span key={genre.id} className="w-max bg-cyan-400 text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded">
                                 {genre.name}</span>
                         ))}

@@ -57,8 +57,8 @@ const CrudGenre = () => {
         getGenres(setGenres);
     };
 
-    const deleteGenre = async (id: number | undefined) => {
-        setId(id);
+    const deleteGenre = async (genreId: number | undefined) => {
+        setId(genreId);
         await axios({ method: 'DELETE', url: URL_GENRES + `/${id}`, data: id });
         getGenres(setGenres);
     }

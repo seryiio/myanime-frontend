@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Season } from "../interfaces/Season";
-import { AnimeDetails } from "../interfaces/AnimeDetails";
 import { URL_ANIME } from "./AnimeService";
 
 export const URL_SEASON = 'https://myanime-backend.onrender.com/api/v1/seasons';

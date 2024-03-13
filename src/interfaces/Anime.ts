@@ -8,5 +8,5 @@ export interface Anime {
     logo_image: string,
     puntuation: number,
     bookId: number,
-    genres: Genre[]
+    genres?: Genre[]
 }

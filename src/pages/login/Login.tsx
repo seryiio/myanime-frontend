@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { Button, Input } from '@nextui-org/react';
 
 const Login = () => {
-    const labelStyles = {
-        color: '#FFFFFF',
-    };
-
     return (
         <>
             <section className='content'>

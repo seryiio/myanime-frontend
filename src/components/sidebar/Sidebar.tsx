@@ -5,7 +5,7 @@ import './Sidebar.scss'
 import Logo from '../../assets/images/Branding/Logo.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleLeft, faCircleRight, faCompass, faEarthAmericas, faHouse, faLayerGroup, faMagnifyingGlass, faNewspaper, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faCircleLeft, faCircleRight, faCompass, faEarthAmericas, faHouse, faLayerGroup, faMagnifyingGlass, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from '@nextui-org/react';
 
@@ -21,7 +21,7 @@ export const Sidebar = () => {
     return (
         <>
             <aside id='aside' className={openSidebar ? 'aside close' : 'aside'}>
-                <div className="w-1/3"><Link to={'/'}>
+                <div className="aside__header"><Link to={'/'}>
                     <img src={Logo} alt="Logo MyAnimes" /></Link>
                 </div>
                 <button onClick={toggleSidebar}>
@@ -61,11 +61,11 @@ export const Sidebar = () => {
                     </div>
                     <Dropdown className='aside__content-2--bottom dark text-white'>
                         <DropdownTrigger>
-                            <Button className='aside__content-2--bottom'
+                            <Button className='profile flex justify-start items-center w-full  text-white'
                                 variant="light"
                             >
                                 <User
-                                    className='text-white text-list'
+                                    className='flex justify-start items-center w-full text-white text-list'
                                     name="Usuario"
                                     description="@usuario"
                                     avatarProps={{

@@ -4,10 +4,6 @@ import './Register.scss'
 import { Button, Input } from '@nextui-org/react';
 
 export const Register = () => {
-    const labelStyles = {
-        color: '#FFFFFF',
-    };
-
     return (
         <>
             <section className='content'>

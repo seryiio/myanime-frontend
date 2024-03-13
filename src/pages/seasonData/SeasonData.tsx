@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Season } from "../../interfaces/Season";
 import { getSeasonBySeasonId } from "../../services/AnimeService";
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Song } from "../../interfaces/Song";
+import { getSongsBySeasonId } from "../../services/SongService";
 
 const SeasonData = () => {
     const animeId = useParams().id;
@@ -17,6 +18,7 @@ const SeasonData = () => {
 
     useEffect(() => {
         getSeasonBySeasonId(animeId, seasonId, setAnimeSeasonsById);
+        getSongsBySeasonId(seasonId, setSongs);
     }, [seasonId]);
 
     console.log(animeSeasonById);

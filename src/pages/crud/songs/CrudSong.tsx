@@ -218,7 +218,7 @@ const CrudSong = () => {
                                     autoFocus
                                     label="Número"
                                     variant="bordered"
-                                    value={number}
+                                    value={(number.toString())}
                                     onChange={(e) => setNumber(parseInt(e.target.value))}
                                 />
                                 <Input

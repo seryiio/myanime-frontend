@@ -146,7 +146,7 @@ export const CrudSeasonbA = () => {
         setId(id);
         await axios({ method: 'DELETE', url: URL_SEASON + `/${id}`, data: id });
         showAlert('Se elimino correctamente', 'success');
-        getAllSeasonsById(animeIdparam, setSeasons);
+        getAllSeasonsByAnimeId(animeIdparam, setSeasons);
     }
 
     const sendRequest = async (method: string, parameters: Season) => {
@@ -157,7 +157,7 @@ export const CrudSeasonbA = () => {
             await axios({ method: method, url: URL_SEASON, data: parameters });
             showAlert('Se registró correctamente', 'success');
         }
-        getAllSeasonsById(animeIdparam, setSeasons);
+        getAllSeasonsByAnimeId(animeIdparam, setSeasons);
     };
 
 

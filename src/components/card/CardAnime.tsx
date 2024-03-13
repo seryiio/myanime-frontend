@@ -6,21 +6,18 @@ import 'swiper/css/pagination';
 
 import './Card.scss'
 
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { FreeMode, Navigation } from 'swiper/modules';
 import { useEffect, useState } from 'react';
-import { Anime } from '../../interfaces/Anime';
-import { getAnimes, getLastSeasonByAnime } from '../../services/AnimeService';
+import { getLastSeasonByAnime } from '../../services/AnimeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
 export const CardAnime = () => {
 
-    const [animes, setAnimes] = useState<Anime[]>([]);
     const [lastSeasonByAnime, setLastSeasonByAnime] = useState<AnimeDetails[]>([]);
 
     useEffect(() => {
-        getAnimes(setAnimes);
         getLastSeasonByAnime(setLastSeasonByAnime);
     }, []);
 

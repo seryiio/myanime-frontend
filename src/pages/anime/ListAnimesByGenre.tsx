@@ -1,8 +1,3 @@
-import { Suspense, useEffect, useState } from "react";
-import { getAnimesByGenre } from "../../services/GenreService";
-import { Link, useParams } from "react-router-dom";
-import CardAnime from "../../components/card/CardAnime";
-
 // const ListAnimesByGenre = () => {
 
 //     const id = useParams().id;

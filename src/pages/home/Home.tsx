@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import './Home.scss'
 import { CardAnime } from '../../components/card/CardAnime';
-import { Anime } from '../../interfaces/Anime';
 import { Suspense, useEffect, useState } from 'react';
-import { getAnimes, getLastSeasonByAnime, getSeasonsByAnimeId } from '../../services/AnimeService';
+import { getLastSeasonByAnime } from '../../services/AnimeService';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -15,14 +14,11 @@ import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
 export const Home = () => {
 
-    const [animes, setAnimes] = useState<Anime[]>([]);
-    const [animeId, setAnimeId] = useState<number | undefined>();
     const [lastSeasonByAnime, setLastSeasonByAnime] = useState<AnimeDetails[]>([]);
 
     console.log(lastSeasonByAnime);
 
     useEffect(() => {
-        getAnimes(setAnimes);
         getLastSeasonByAnime(setLastSeasonByAnime);
     }, []);
 

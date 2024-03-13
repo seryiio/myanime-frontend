@@ -1,10 +1,12 @@
-#aside {}
-
 .aside.close {
     @apply w-9;
 
     .text-list {
         @apply hidden;
+    }
+
+    .aside__header {
+        @apply w-full;
     }
 
     .aside__content-1 {
@@ -30,19 +32,26 @@
                 }
             }
         }
-    }
 
-    .aside__content-2--bottom {
-        .list {
-            .link {
-                @apply justify-center;
+        .aside__content-2--bottom {
+
+            .list {
+                .link {
+                    @apply justify-center;
+                }
             }
         }
     }
+
 }
 
 .aside {
     @apply hidden lg:flex flex-col h-full text-[var(--text-color)];
+
+    
+    .aside__header {
+        @apply w-1/3;
+    }
 
     .aside__content-1 {
         @apply flex justify-center items-center flex-col w-full bg-[var(--bg-container)] rounded-lg p-4 gap-8;
@@ -80,7 +89,7 @@
         }
 
         .aside__content-2--bottom {
-            @apply flex justify-center items-center w-full;
+            @apply flex justify-center items-center w-full text-white;
 
             .list {
                 @apply w-full;

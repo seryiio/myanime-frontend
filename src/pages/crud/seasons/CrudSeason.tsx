@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 export const CrudSeason = () => {
     const [titleModal, setTitleModal] = useState('');
+    const [labelButton, setLabelButton] = useState('');
     const [operation, setOperation] = useState<number>(0);
 
     const [seasons, setSeasons] = useState<Season[]>([]);
@@ -27,6 +28,7 @@ export const CrudSeason = () => {
     const [coverImageSecondary, setCoverImageSecondary] = useState('');
     const [urlTrailer, setUrlTrailer] = useState('');
     const [status, setStatus] = useState(false);
+    const [animeId, setAnimeId] = useState(0);
 
     useEffect(() => {
         getAllSeasons(setSeasons);
@@ -45,14 +47,6 @@ export const CrudSeason = () => {
         return seasons.slice(start, end);
     }, [page, seasons]);
 
-
-    /**
-     * *ESTADOS NECESRIOS PARA EL MODAL DE MATERIALUI
-     */
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => { setOpen(false) };
-
     const openModalRegister = (op: number) => {
         setId(0);
         setNumber(0);
@@ -68,11 +62,13 @@ export const CrudSeason = () => {
         setCoverImageSecondary('');
         setUrlTrailer('');
         setStatus(false);
+        setAnimeId(0);
         setTitleModal('Registrar Temporada');
+        setLabelButton('Agregar');
         setOperation(op);
     }
 
-    const openModalEdit = (op: number, id: number | undefined, number: number, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, type: string, studio: string, image: string, coverImage: string, coverImageSecondary: string, urlTrailer: string, status: boolean) => {
+    const openModalEdit = (op: number, id: number | undefined, number: number, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, type: string, studio: string, image: string, coverImage: string, coverImageSecondary: string, urlTrailer: string, status: boolean, animeId: number) => {
         setTitleModal('Editar Temporada');
         setId(id);
         setNumber(number);
@@ -88,6 +84,8 @@ export const CrudSeason = () => {
         setCoverImageSecondary(coverImageSecondary);
         setUrlTrailer(urlTrailer);
         setStatus(status);
+        setAnimeId(animeId);
+        setLabelButton('Editar');
         setOperation(op);
     }
 
@@ -108,7 +106,7 @@ export const CrudSeason = () => {
                 cover_image: coverImage.trim(),
                 cover_image_secondary: coverImageSecondary.trim(),
                 url_trailer: urlTrailer.trim(),
-                animeId: convertIdAnime,
+                animeId: animeId,
                 status: status,
             };
 
@@ -128,7 +126,7 @@ export const CrudSeason = () => {
                 cover_image: coverImage.trim(),
                 cover_image_secondary: coverImageSecondary.trim(),
                 url_trailer: urlTrailer.trim(),
-                animeId: convertIdAnime,
+                animeId: animeId,
                 status: status,
             };
             method = 'PUT';
@@ -154,6 +152,14 @@ export const CrudSeason = () => {
         getAllSeasons(setSeasons);
     };
 
+    const SEASON_LIST = ["Spring", "Summer", "Autumn", "Winter"];
+
+    const handleSelectionTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setType(e.target.value);
+    };
+    const handleSelectionSeasonYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSeasonYear(e.target.value);
+    };
 
     return (
         <>
@@ -204,6 +210,7 @@ export const CrudSeason = () => {
                         <TableColumn>COVER IMAGE SECONDARY</TableColumn>
                         <TableColumn>URL TRAILER</TableColumn>
                         <TableColumn>ESTADO</TableColumn>
+                        <TableColumn>ANIME ID</TableColumn>
                         <TableColumn>CANCIONES</TableColumn>
                         <TableColumn>EPISODIOS</TableColumn>
                         <TableColumn>OPCIONES</TableColumn>
@@ -235,6 +242,7 @@ export const CrudSeason = () => {
                                             </TableCell>
                                             <TableCell>{season.url_trailer}</TableCell>
                                             <TableCell>{season.status ? <Chip color="success">En Emisión</Chip> : <Chip color="danger">Terminado</Chip>}</TableCell>
+                                            <TableCell>{season.animeId}</TableCell>
                                             <TableCell>
                                                 <Tooltip content="Ver Canciones">
                                                     <Link to={`${season.id}/songs`}>
@@ -259,7 +267,7 @@ export const CrudSeason = () => {
                                                 <Tooltip content="Editar">
                                                     <Button className="bg-transparent" onPress={onOpen} onClick={() => {
                                                         openModalEdit(2, season.id, season.number, season.title_japanese, season.title_english, season.synopsis, season.year, season.season_year, season.type, season.studio, season.image, season.cover_image, season.cover_image_secondary, season.url_trailer,
-                                                            season.status)
+                                                            season.status, season.animeId)
                                                     }}>
                                                         <span className="text-lg cursor-pointer active:opacity-50">
                                                             <FontAwesomeIcon icon={faPenToSquare} />
@@ -391,6 +399,14 @@ export const CrudSeason = () => {
                                     variant="bordered"
                                     value={urlTrailer}
                                     onChange={(e) => setUrlTrailer(e.target.value)}
+                                />
+                                <Input
+                                    type="number"
+                                    className="form__inputAnimeId"
+                                    label="Anime id"
+                                    variant="bordered"
+                                    value={(animeId).toString()}
+                                    onChange={(e) => setAnimeId(parseInt(e.target.value))}
                                 />
                                 <Checkbox isSelected={status} className="form__CheckboxStatus" onChange={(e) => setStatus(e.target.checked)}>Estado</Checkbox>
                             </ModalBody>
