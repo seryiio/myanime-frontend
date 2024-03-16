@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import './Card.scss'
 
 import { FreeMode, Navigation } from 'swiper/modules';
-import { useEffect, useState } from 'react';
+import { Fragment, Suspense, useEffect, useState } from 'react';
 import { getLastSeasonByAnime } from '../../services/AnimeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -38,21 +38,21 @@ export const CardAnime = () => {
             >
                 {
                     lastSeasonByAnime.map((anime) => (
-                        <>
+                        <Suspense fallback={<h1>Cargando...</h1>}>
                             <SwiperSlide key={anime.id} className='swiper-card__slide'>
                                 <div className='swiper-card__slide--content'>
                                     <a href={`/animes/${anime.id}`}>
                                         <div className="card">
                                             {
                                                 anime.seasons.map((dataseason) => (
-                                                    <>
+                                                    <Fragment key={dataseason.id}>
                                                         <div className="card__img">
                                                             <img src={dataseason.image} alt={dataseason.title_english} />
                                                         </div>
                                                         <div className="card__description h-5 truncate">
                                                             {dataseason.title_english}
                                                         </div>
-                                                    </>
+                                                    </Fragment>
                                                 ))
                                             }
 
@@ -60,7 +60,7 @@ export const CardAnime = () => {
                                     </a>
                                 </div>
                             </SwiperSlide>
-                        </>
+                        </Suspense>
                     ))
                 }
                 <button className="swiper-card--btnPrev z-[998]">

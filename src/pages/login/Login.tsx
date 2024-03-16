@@ -20,11 +20,11 @@ const Login = () => {
                     </div>
                     <form action="" className='form flex flex-col bg-[#141418] md:w-96 h-max px-8 py-8 gap-8'>
                         <div className='flex flex-col gap-4'>
-                            <Input type="email" className='dark' variant={'underlined'} label="Correo electrónico" />
-                            <Input type="password" className='dark' variant={'underlined'} label="Contraseña" />
+                            <Input id='email' type="email" className='dark' variant={'underlined'} label="Correo electrónico" />
+                            <Input id='password' type="password" className='dark' variant={'underlined'} label="Contraseña" />
                             <Link to={`/`} className='text-white hover:text-[#46b3e6]'>¿Has olvidado tu contraseña?</Link>
                         </div>
-                        <Button size="md">
+                        <Button type='submit' size="md">
                             Ingresar
                         </Button>
                     </form>
