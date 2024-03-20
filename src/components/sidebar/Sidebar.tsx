@@ -19,10 +19,6 @@ export const Sidebar = () => {
                     <Link className='link' to={'/'}>
                         <FontAwesomeIcon icon={faHouse} /> <p className='text-list'>Inicio</p></Link>
                 </div>
-                <div className="aside__content-1--search">
-                    <Link className='link' to={'/'}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} /> <p className='text-list'>Buscar</p></Link>
-                </div>
             </div>
             <div className="aside__content-2">
                 <div className="aside__content-2--top">
