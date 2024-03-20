@@ -12,7 +12,6 @@ import { getLastSeasonByAnime } from '../../services/AnimeService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
-import { Genre } from '../../interfaces/Genre';
 import { Link } from 'react-router-dom';
 
 export const CardAnime = ({ props }: { props: any }) => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import './SeasonData.scss'
 
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Season } from "../../interfaces/Season";
 import { getSeasonBySeasonId } from "../../services/AnimeService";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, useDisclosure } from "@nextui-org/react";
@@ -11,14 +11,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Song } from "../../interfaces/Song";
 import { getSongsBySeasonId } from "../../services/SongService";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
-import { IMyList } from "../../interfaces/MyList";
-import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import { Userdata } from "../../interfaces/Userdata";
+// import { IMyList } from "../../interfaces/MyList";
+// import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+// import { Userdata } from "../../interfaces/Userdata";
 
 const SeasonData = () => {
     const isAuthenticated = useIsAuthenticated();
-    const authUser = useAuthUser<Userdata>();
-    const userId = authUser ? authUser.uid : '';
+    // const authUser = useAuthUser<Userdata>();
+    // const userId = authUser ? authUser.uid : '';
     const navigate = useNavigate();
 
     const animeId = useParams().id;
@@ -26,7 +26,7 @@ const SeasonData = () => {
 
     const [animeSeasonById, setAnimeSeasonsById] = useState<Season | null>(null);
     const [songs, setSongs] = useState<Song[]>([]);
-    const [myList, setMyList] = useState<IMyList[]>([]);
+    // const [myList, setMyList] = useState<IMyList[]>([]);
 
     const [quantityEpisodesBySeason, setQuantityEpisodesById] = useState<number[]>([]);
 

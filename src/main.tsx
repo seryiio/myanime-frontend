@@ -3,7 +3,6 @@ import '@fontsource-variable/baloo-2';
 
 import {
   createBrowserRouter,
-  Route,
   RouterProvider,
 } from "react-router-dom";
 

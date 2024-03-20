@@ -9,8 +9,6 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { getAnimeById, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Anime } from '../../interfaces/Anime';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Season } from '../../interfaces/Season';

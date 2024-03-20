@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IMyList } from "../interfaces/MyList";
 
-export const URL_MY_LIST = 'http://localhost:3000/api/v1/mylist';
+export const URL_MY_LIST = 'https://myanime-backend.onrender.com/api/v1/mylist';
 
 export const getMyListByUserId = async (userId: string, setMyList: React.Dispatch<React.SetStateAction<IMyList[]>>) => {
     try {

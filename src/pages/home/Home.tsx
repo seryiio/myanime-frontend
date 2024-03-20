@@ -24,8 +24,6 @@ export const Home = () => {
         getGenres(setGenres);
     }, []);
 
-    const GENRE = "Comedy";
-
     return (
         <>
             <Suspense fallback={<div className='bg-white'>Cargando...</div>}>

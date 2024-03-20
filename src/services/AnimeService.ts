@@ -4,8 +4,8 @@ import { Season } from "../interfaces/Season";
 import { AnimeDetails } from "../interfaces/AnimeDetails";
 //'https://myanime-backend.onrender.com/api/v1/animes'
 //'https://myanime-backend.onrender.com/api/v1/books'
-export const URL_ANIME = 'http://localhost:3000/api/v1/animes';
-export const URL_BOOKS = 'http://localhost:3000/api/v1/books';
+export const URL_ANIME = 'https://myanime-backend.onrender.com/api/v1/animes';
+export const URL_BOOKS = 'https://myanime-backend.onrender.com/api/v1/books';
 
 /**
  * 
