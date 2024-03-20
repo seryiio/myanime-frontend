@@ -34,6 +34,7 @@ export const CrudSeasonbA = () => {
     const [coverImage, setCoverImage] = useState('');
     const [coverImageSecondary, setCoverImageSecondary] = useState('');
     const [urlTrailer, setUrlTrailer] = useState('');
+    const [quantityEpisodes, setQuantityEpisodes] = useState(0);
     const [status, setStatus] = useState(false);
 
     const convertIdAnime = animeIdparam ? parseInt(animeIdparam) : NaN;
@@ -71,13 +72,14 @@ export const CrudSeasonbA = () => {
         setCoverImage('');
         setCoverImageSecondary('');
         setUrlTrailer('');
+        setQuantityEpisodes(0);
         setStatus(false);
         setTitleModal('Registrar Temporada');
         setLabelButton('Agregar');
         setOperation(op);
     }
 
-    const openModalEdit = (op: number, id: number | undefined, number: number, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, type: string, studio: string, image: string, coverImage: string, coverImageSecondary: string,urlTrailer: string, status: boolean) => {
+    const openModalEdit = (op: number, id: number | undefined, number: number, titleJapanese: string, titleEnglish: string, synopsis: string, year: number, seasonYear: string, type: string, studio: string, image: string, coverImage: string, coverImageSecondary: string,urlTrailer: string, quantityEpisodes: number,status: boolean) => {
         setTitleModal('Editar Temporada');
         setLabelButton('Editar');
         setId(id);
@@ -93,6 +95,7 @@ export const CrudSeasonbA = () => {
         setCoverImage(coverImage);
         setCoverImageSecondary(coverImageSecondary);
         setUrlTrailer(urlTrailer);
+        setQuantityEpisodes(quantityEpisodes);
         setStatus(status);
         setOperation(op);
     }
@@ -114,6 +117,7 @@ export const CrudSeasonbA = () => {
                 cover_image: coverImage.trim(),
                 cover_image_secondary: coverImageSecondary.trim(),
                 url_trailer: urlTrailer.trim(),
+                quantity_episodes: quantityEpisodes,
                 animeId: convertIdAnime,
                 status: status,
             };
@@ -134,6 +138,7 @@ export const CrudSeasonbA = () => {
                 cover_image: coverImage.trim(),
                 cover_image_secondary: coverImageSecondary.trim(),
                 url_trailer: urlTrailer.trim(),
+                quantity_episodes: quantityEpisodes,
                 animeId: convertIdAnime,
                 status: status,
             };
@@ -272,7 +277,7 @@ export const CrudSeasonbA = () => {
                                             <TableCell className="flex gap-2">
                                                 <Tooltip content="Editar">
                                                     <Button className="bg-transparent" onPress={onOpen} onClick={() => {
-                                                        openModalEdit(2, season.id, season.number, season.title_japanese, season.title_english, season.synopsis, season.year, season.season_year, season.type, season.studio, season.image, season.cover_image, season.cover_image_secondary,season.url_trailer,
+                                                        openModalEdit(2, season.id, season.number, season.title_japanese, season.title_english, season.synopsis, season.year, season.season_year, season.type, season.studio, season.image, season.cover_image, season.cover_image_secondary,season.url_trailer, season.quantity_episodes,
                                                             season.status)
                                                     }}>
                                                         <span className="text-lg cursor-pointer active:opacity-50">

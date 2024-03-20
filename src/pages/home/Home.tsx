@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Home.scss'
 import { CardAnime } from '../../components/card/CardAnime';
-import { Suspense, useEffect, useState } from 'react';
+import { Fragment, Suspense, useEffect, useState } from 'react';
 import { getLastSeasonByAnime } from '../../services/AnimeService';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -11,15 +11,17 @@ import 'swiper/css/pagination';
 
 import { Autoplay, Pagination } from 'swiper/modules';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
+import { Genre } from '../../interfaces/Genre';
+import { getGenres } from '../../services/GenreService';
 
 export const Home = () => {
 
+    const [genres, setGenres] = useState<Genre[]>([]);
     const [lastSeasonByAnime, setLastSeasonByAnime] = useState<AnimeDetails[]>([]);
-
-    console.log(lastSeasonByAnime);
 
     useEffect(() => {
         getLastSeasonByAnime(setLastSeasonByAnime);
+        getGenres(setGenres);
     }, []);
 
     return (
@@ -47,7 +49,9 @@ export const Home = () => {
                                     <div className="section-1__img">
                                         {
                                             anime.seasons.map((season) =>
-                                                <img src={season.cover_image_secondary} alt={season.title_english} />
+                                                <Fragment key={season.id}>
+                                                    <img src={season.cover_image_secondary} alt={season.title_english} />
+                                                </Fragment>
                                             )
                                         }
                                     </div>
@@ -60,7 +64,7 @@ export const Home = () => {
             <section className='section-2'>
                 <h1 className='p-2'>TOP Animes Winter 2024</h1>
                 <div className="section-2__slide">
-                    <CardAnime />
+                    <CardAnime props={'WINTER'}/>
                 </div>
             </section>
             <section className='section-3'>
@@ -69,8 +73,20 @@ export const Home = () => {
             </section>
             <section className='section-4'>
                 <h1>Nuevos Episodios</h1>
-                <CardAnime />
+                <CardAnime props={true}/>
             </section>
+            {
+                genres.map(genre => (
+                    <section className='section-genres'>
+                        {
+                            <Fragment key={genre.id}>
+                                <h1>{genre.name}</h1>
+                                <CardAnime props={genre.name} />
+                            </Fragment>
+                        }
+                    </section>
+                ))
+            }
         </>
     )
 }

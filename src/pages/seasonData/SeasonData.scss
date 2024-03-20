@@ -1,0 +1,15 @@
+.sectionHeaderSeason {
+    @apply flex flex-col h-max;
+
+    .sectionHeaderSeason__content {
+        @apply flex flex-col lg:block lg:relative top-0 left-0 w-full h-full lg:h-[36em];
+
+        .sectionHeaderSeason__content--picture {
+            @apply w-full h-full;
+            img {
+                @apply w-full h-full overflow-hidden;
+                mask-image: linear-gradient(black 50%, transparent);
+            }
+        }
+    }
+}

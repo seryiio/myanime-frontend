@@ -28,6 +28,19 @@ import CrudAnimebB from './pages/crud/animes/CrudAnimebB.tsx';
 import ListBooks from './pages/book/ListBooksByGenre.tsx';
 import ListBooksByGenre from './pages/book/ListBooksByGenre.tsx';
 
+import AuthProvider from "react-auth-kit";
+import RequireAuth from '@auth-kit/react-router/RequireAuth'
+import createStore from 'react-auth-kit/createStore';
+import MyList from './pages/myList/MyList.tsx';
+import ProtectedRoute from './components/routes/ProtectedRoute.tsx';
+
+const store = createStore({
+  authName: '_auth',
+  authType: 'cookie',
+  cookieDomain: window.location.hostname,
+  cookieSecure: window.location.protocol === 'https:'
+});
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,31 +48,32 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       {
-        path: 'crud', element: <Crud />,
+        path: 'crud', element:
+          <ProtectedRoute><Crud /></ProtectedRoute>,
       },
       {
-        path: 'crud/genres', element: <CrudGenre />
+        path: 'crud/genres', element: <ProtectedRoute><CrudGenre /></ProtectedRoute>,
       },
       {
-        path: 'crud/books', element: <CrudBook />
+        path: 'crud/books', element: <ProtectedRoute><CrudBook /></ProtectedRoute>,
       },
       {
-        path: 'crud/animes', element: <CrudAnime />
+        path: 'crud/animes', element: <ProtectedRoute><CrudAnime /></ProtectedRoute>,
       },
       {
-        path: 'crud/books/:id/animes', element: <CrudAnimebB />
+        path: 'crud/books/:id/animes', element: <ProtectedRoute><CrudAnimebB /></ProtectedRoute>,
       },
       {
-        path: 'crud/animes/:id/seasons', element: <CrudSeasonbA />
+        path: 'crud/animes/:id/seasons', element: <ProtectedRoute><CrudSeasonbA /></ProtectedRoute>,
       },
       {
-        path: 'crud/animes/:id/seasons/:idseason/episodes', element: <CrudEpisodesbS />
+        path: 'crud/animes/:id/seasons/:idseason/episodes', element: <ProtectedRoute><CrudEpisodesbS /></ProtectedRoute>,
       },
       {
-        path: 'crud/animes/:id/seasons/:idseason/songs', element: <CrudSong />
+        path: 'crud/animes/:id/seasons/:idseason/songs', element: <ProtectedRoute> <CrudSong /></ProtectedRoute>,
       },
       {
-        path: 'crud/seasons', element: <CrudSeason />
+        path: 'crud/seasons', element: <ProtectedRoute><CrudSeason /></ProtectedRoute>,
       },
       {
         path: 'genres', element: <ListGenres />
@@ -76,6 +90,9 @@ const router = createBrowserRouter([
       {
         path: 'animes/:id/seasons/:idSeason', element: <SeasonData />
       },
+      {
+        path: 'myList', element: <RequireAuth fallbackPath={'/login'}><MyList /></RequireAuth>
+      },
     ],
   },
   {
@@ -90,6 +107,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <NextUIProvider>
-    <RouterProvider router={router} />
+    <AuthProvider store={store}>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </NextUIProvider>,
 )

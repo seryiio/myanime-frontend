@@ -1,9 +1,18 @@
-.aside {
-    @apply flex justify-start items-center flex-col gap-5 text-[var(--text-color)] py-2;
-}
+.content {
+    @apply w-full h-screen p-2;
 
-.main-content {
-    @apply flex-1 grid gap-2 overflow-y-scroll h-full bg-[var(--bg-container)] rounded-lg;
+    .content__main {
+        @apply flex h-[90%] gap-2;
+
+        .aside {
+            @apply hidden lg:flex flex-col h-full justify-start items-center gap-5 text-[var(--text-color)] py-2;
+        }
+
+        .main-content {
+            @apply flex-1 grid h-full gap-2 overflow-y-scroll bg-[var(--bg-container)] rounded-lg;
+        }
+    }
+
 }
 
 *::-webkit-scrollbar {

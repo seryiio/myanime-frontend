@@ -9,17 +9,12 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { getAnimeById, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Anime } from '../../interfaces/Anime';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Season } from '../../interfaces/Season';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
 export const AnimeData = () => {
-
-    const ADD_LIST = "Agregar a mi lista";
-    const ADD_FAVORITE = "Agregar a mis favoritos";
 
     const animeIdParam = useParams().id;
 
@@ -61,16 +56,6 @@ export const AnimeData = () => {
                         transition={{ duration: 1.5 }}
                     >
                         <img src={animeId?.logo_image} width={350} alt="" /></motion.div>
-                    <div className="save-anime flex flex-wrap justify-center lg:justify-between items-center gap-y-4 gap-x-10">
-                        <a href="" className='flex justify-center items-center gap-2'>
-                            <FontAwesomeIcon icon={faBookmark} style={{ color: "#ffffff", }} />
-                            <h3>{ADD_FAVORITE}</h3>
-                        </a>
-                        <a href="" className='flex justify-center items-center gap-2'>
-                            <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />
-                            <h3>{ADD_LIST}</h3>
-                        </a>
-                    </div>
                     <div className="genres">
                         {animeId?.genres?.map((genre) => (
                             <span key={genre.id} className="w-max bg-cyan-400 text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded">

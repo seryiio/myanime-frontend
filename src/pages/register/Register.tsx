@@ -1,12 +1,38 @@
+import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/Branding/Logo.svg';
-import './Register.scss'
+import './Register.scss';
 import { Button, Input } from '@nextui-org/react';
 
-export const Register = () => {
+const Register = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [repeatpasswordError, setRepeatPasswordError] = useState('');
+
+    const validateEmail = (value: string) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value);
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    
+        if (!validateEmail(email)) {
+            setEmailError('Por favor, introduce un correo electrónico válido.');
+            return;
+        }
+        
+        if (password !== repeatPassword) {
+            setPasswordError('Las contraseñas deben ser iguales');
+            setRepeatPasswordError('Las contraseñas deben ser iguales');
+            return;
+        }
+    }
+
     return (
         <>
-            <section className='content'>
+            <section className='content_register'>
                 <header className='flex justify-center items-center p-4 w-full h-max bg-[#22242b]'>
                     <Link to={'/'} className='flex justify-center items-center gap-2'>
                         <picture>
@@ -18,19 +44,52 @@ export const Register = () => {
                     <div className="title">
                         <h1>CREAR CUENTA</h1>
                     </div>
-                    <form action="" className='form flex flex-col bg-[#141418] md:w-96 h-max px-8 py-8 gap-8'>
+                    <form onSubmit={handleSubmit} className='form flex flex-col bg-[#141418] md:w-96 h-max px-8 py-8 gap-8'>
                         <div className='flex flex-col gap-4'>
-                            <Input type="email" className='dark' variant={'underlined'} label="Correo electrónico" />
-                            <Input type="text" className='dark' variant={'underlined'} label="Nombre de Usuario" />
-                            <Input type="password" className='dark' variant={'underlined'} label="Contraseña" />
-                            <Input type="password" className='dark' variant={'underlined'} label="Repetir Contraseña" />
+                            <Input
+                                value={email}
+                                type="email"
+                                label="Email"
+                                variant={'underlined'}
+                                isInvalid={!!emailError}
+                                color={!!emailError ? "danger" : "default"}
+                                errorMessage={emailError}
+                                onValueChange={setEmail}
+                                className="max-w-xs dark"
+                            />
+                            <Input
+                                type="text"
+                                className='dark'
+                                variant={'underlined'}
+                                label="Nombre de Usuario"
+                            />
+                            <Input
+                                value={password}
+                                type="password"
+                                className='dark'
+                                variant={'underlined'}
+                                label="Contraseña"
+                                color={!!passwordError ? "danger" : "default"}
+                                errorMessage={passwordError}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <Input
+                                value={repeatPassword}
+                                type="password"
+                                className='dark'
+                                variant={'underlined'}
+                                label="Repetir Contraseña"
+                                color={!!repeatpasswordError ? "danger" : "default"}
+                                errorMessage={repeatpasswordError}
+                                onChange={(e) => setRepeatPassword(e.target.value)}
+                            />
                             <Link to={`/`} className='text-white hover:text-[#46b3e6]'>¿Has olvidado tu contraseña?</Link>
                         </div>
-                        <Button size="md">
+                        <Button type='submit' size="md">
                             Ingresar
                         </Button>
                     </form>
-                    <p>Ya tienes una cuenta? <span className='text-[#46b3e6] font-bold'> <Link to={'/login'}>ACCEDER</Link></span>
+                    <p>¿Ya tienes una cuenta? <span className='text-[#46b3e6] font-bold'> <Link to={'/login'}>ACCEDER</Link></span>
                     </p>
                 </div>
             </section>
@@ -41,4 +100,5 @@ export const Register = () => {
         </>
     )
 }
+
 export default Register;
