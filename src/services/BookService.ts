@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Book } from "../interfaces/Book";
 
-export const URL_BOOK = 'https://myanime-backend.onrender.com/api/v1/books';
+export const URL_BOOK = 'https://myanime-api.onrender.com//api/v1/books';
 
 /**
  * 
