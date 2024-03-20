@@ -4,7 +4,7 @@ import './Sidebar.scss'
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCompass, faEarthAmericas, faHouse, faLayerGroup, faLock, faMagnifyingGlass, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { faCompass, faEarthAmericas, faHouse, faLayerGroup, faLock, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Userdata } from '../../interfaces/Userdata';
 
