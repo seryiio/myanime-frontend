@@ -14,7 +14,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
 import { Link } from 'react-router-dom';
 
-export const CardAnime = ({ props }: { props: any }) => {
+export const CardAnime = ({ props }: any) => {
 
     const [lastSeasonByAnime, setLastSeasonByAnime] = useState<AnimeDetails[]>([]);
 

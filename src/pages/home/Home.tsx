@@ -69,7 +69,7 @@ export const Home = () => {
             </section>
             <section className='section-3'>
                 <h1>Mi Lista</h1>
-                <CardAnime />
+                <CardAnime props={'WINTER'}/>
             </section>
             <section className='section-4'>
                 <h1>Nuevos Episodios</h1>
