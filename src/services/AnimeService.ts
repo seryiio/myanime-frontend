@@ -2,9 +2,10 @@ import axios from "axios";
 import { Anime } from "../interfaces/Anime";
 import { Season } from "../interfaces/Season";
 import { AnimeDetails } from "../interfaces/AnimeDetails";
-
-export const URL_ANIME = 'https://myanime-backend.onrender.com/api/v1/animes';
-export const URL_BOOKS = 'https://myanime-backend.onrender.com/api/v1/books';
+//'https://myanime-backend.onrender.com/api/v1/animes'
+//'https://myanime-backend.onrender.com/api/v1/books'
+export const URL_ANIME = 'http://localhost:3000/api/v1/animes';
+export const URL_BOOKS = 'http://localhost:3000/api/v1/books';
 
 /**
  * 
@@ -47,7 +48,6 @@ export const getSeasonsByAnimeId = async (
     try {
         const response = await axios.get(`${URL_ANIME}/${animeId}/seasons`);
         setAnimeSeasonsById(response.data);
-        console.log(response.data);
     } catch (error) {
         console.error('Error al obtener las temporadas del anime por ID:', error);
     }
@@ -57,7 +57,6 @@ export const getLastSeasonByAnime = async (setLastSeasonByAnime: React.Dispatch<
     try {
         const response = await axios.get(`${URL_ANIME}/lastseason`);
         setLastSeasonByAnime(response.data);
-        console.log(response.data);
     } catch (error) {
         console.error('Error al obtener la ultima temporada de cada anime:', error);
     }

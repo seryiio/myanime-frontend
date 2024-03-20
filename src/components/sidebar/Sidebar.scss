@@ -34,9 +34,8 @@
         }
 
         .aside__content-2--bottom {
-
-            .list {
-                .link {
+            .dropdownTrigger {
+                .profile {
                     @apply justify-center;
                 }
             }
@@ -45,58 +44,49 @@
 
 }
 
-.aside {
-    @apply hidden lg:flex flex-col h-full text-[var(--text-color)];
+.aside__content-1 {
+    @apply flex justify-center items-center flex-col w-full bg-[var(--bg-container)] rounded-lg p-4 gap-8;
 
-    
-    .aside__header {
-        @apply w-1/3;
+    .aside__content-1--home {
+        @apply flex justify-start items-center gap-2 w-full;
+
+        .link {
+            @apply flex justify-start items-center gap-2 w-full;
+        }
     }
 
-    .aside__content-1 {
-        @apply flex justify-center items-center flex-col w-full bg-[var(--bg-container)] rounded-lg p-4 gap-8;
+    .aside__content-1--search {
+        @apply flex justify-start items-center gap-2 w-full;
 
-        .aside__content-1--home {
+        .link {
             @apply flex justify-start items-center gap-2 w-full;
+        }
+    }
+}
+
+.aside__content-2 {
+    @apply flex justify-between items-start flex-col flex-1 w-full rounded-lg p-4 bg-[var(--bg-container)];
+
+    .aside__content-2--top {
+        @apply flex flex-col gap-8 w-full;
+
+        .list {
+            @apply w-full;
 
             .link {
                 @apply flex justify-start items-center gap-2 w-full;
             }
         }
-
-        .aside__content-1--search {
-            @apply flex justify-start items-center gap-2 w-full;
-
-            .link {
-                @apply flex justify-start items-center gap-2 w-full;
-            }
-        }
     }
 
-    .aside__content-2 {
-        @apply flex justify-between items-start flex-col flex-1 w-full rounded-lg p-4 bg-[var(--bg-container)];
+    .aside__content-2--bottom {
+        @apply flex flex-col gap-8 w-full;
 
-        .aside__content-2--top {
-            @apply flex flex-col gap-8 w-full;
+        .dropdownTrigger {
+            @apply w-full;
 
-            .list {
-                @apply w-full;
-
-                .link {
-                    @apply flex justify-start items-center gap-2 w-full;
-                }
-            }
-        }
-
-        .aside__content-2--bottom {
-            @apply flex justify-center items-center w-full text-white;
-
-            .list {
-                @apply w-full;
-
-                .link {
-                    @apply flex justify-center items-center gap-2;
-                }
+            .profile {
+                @apply flex justify-start items-center gap-2 w-full text-white;
             }
         }
     }

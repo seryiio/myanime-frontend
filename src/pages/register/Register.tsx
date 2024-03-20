@@ -4,7 +4,7 @@ import Logo from '../../assets/images/Branding/Logo.svg';
 import './Register.scss';
 import { Button, Input } from '@nextui-org/react';
 
-export const Register = () => {
+const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -32,7 +32,7 @@ export const Register = () => {
 
     return (
         <>
-            <section className='content'>
+            <section className='content_register'>
                 <header className='flex justify-center items-center p-4 w-full h-max bg-[#22242b]'>
                     <Link to={'/'} className='flex justify-center items-center gap-2'>
                         <picture>

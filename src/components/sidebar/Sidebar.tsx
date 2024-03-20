@@ -2,88 +2,54 @@ import { Link } from 'react-router-dom';
 
 import './Sidebar.scss'
 
-import Logo from '../../assets/images/Branding/Logo.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleLeft, faCircleRight, faCompass, faEarthAmericas, faHouse, faLayerGroup, faMagnifyingGlass, faNewspaper } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from '@nextui-org/react';
+import { faCompass, faEarthAmericas, faHouse, faLayerGroup, faLock, faMagnifyingGlass, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { Userdata } from '../../interfaces/Userdata';
 
 export const Sidebar = () => {
-
-    const [openSidebar, setOpenSidebar] = useState(false);
-
-    function toggleSidebar() {
-        setOpenSidebar(true);
-        if (openSidebar === true) { setOpenSidebar(false); }
-    }
+    const authUser = useAuthUser<Userdata>();
+    const role = authUser ? authUser.role : '';
 
     return (
         <>
-            <aside id='aside' className={openSidebar ? 'aside close' : 'aside'}>
-                <div className="aside__header"><Link to={'/'}>
-                    <img src={Logo} alt="Logo MyAnimes" /></Link>
+            <div className="aside__content-1">
+                <div className="aside__content-1--home">
+                    <Link className='link' to={'/'}>
+                        <FontAwesomeIcon icon={faHouse} /> <p className='text-list'>Inicio</p></Link>
                 </div>
-                <button onClick={toggleSidebar}>
-                    {
-                        openSidebar ?
-                            <FontAwesomeIcon icon={faCircleRight} size="lg" /> :
-                            <FontAwesomeIcon icon={faCircleLeft} size="lg" />
-                    }
-                </button>
-                <div className="aside__content-1">
-                    <div className="aside__content-1--home">
+                <div className="aside__content-1--search">
+                    <Link className='link' to={'/'}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} /> <p className='text-list'>Buscar</p></Link>
+                </div>
+            </div>
+            <div className="aside__content-2">
+                <div className="aside__content-2--top">
+                    <div className="list">
                         <Link className='link' to={'/'}>
-                            <FontAwesomeIcon icon={faHouse} /> <p className='text-list'>Inicio</p></Link>
+                            <FontAwesomeIcon icon={faCompass} /> <p className='text-list'>Explorar</p></Link>
                     </div>
-                    <div className="aside__content-1--search">
+                    <div className="list">
+                        <Link className='link' to={'/mylist'}>
+                            <FontAwesomeIcon icon={faLayerGroup} /> <p className='text-list'>Mi Lista</p></Link>
+                    </div>
+                    <div className="list">
                         <Link className='link' to={'/'}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} /> <p className='text-list'>Buscar</p></Link>
+                            <FontAwesomeIcon icon={faNewspaper} /> <p className='text-list'>Noticias</p></Link>
                     </div>
-                </div>
-                <div className="aside__content-2">
-                    <div className="aside__content-2--top">
-                        <div className="list">
-                            <Link className='link' to={'/'}>
-                                <FontAwesomeIcon icon={faCompass} /> <p className='text-list'>Explorar</p></Link>
-                        </div>
-                        <div className="list">
-                            <Link className='link' to={'/'}>
-                                <FontAwesomeIcon icon={faLayerGroup} /> <p className='text-list'>Mi Lista</p></Link>
-                        </div>
-                        <div className="list">
-                            <Link className='link' to={'/'}>
-                                <FontAwesomeIcon icon={faNewspaper} /> <p className='text-list'>Noticias</p></Link>
-                        </div>
-                        <div className="list">
-                            <Link className='link' to={'/'}><FontAwesomeIcon icon={faEarthAmericas} /> <p className='text-list'>Comunidad</p></Link>
-                        </div>
+                    <div className="list">
+                        <Link className='link' to={'/'}><FontAwesomeIcon icon={faEarthAmericas} /> <p className='text-list'>Comunidad</p></Link>
                     </div>
-                    <Dropdown className='aside__content-2--bottom dark text-white'>
-                        <DropdownTrigger>
-                            <Button className='profile flex justify-start items-center w-full  text-white'
-                                variant="light"
-                            >
-                                <User
-                                    className='flex justify-start items-center w-full text-white text-list'
-                                    name="Usuario"
-                                    description="@usuario"
-                                    avatarProps={{
-                                        src: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-                                    }}
-                                />
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu aria-label="Static Actions">
-                            <DropdownItem key="copy"><Link className='flex' to={`/register`}>Registrarse</Link></DropdownItem>
-                            <DropdownItem key="edit"><Link className='flex' to={`/login`}>Acceder</Link></DropdownItem>
-                            <DropdownItem key="delete" className="text-danger" color="danger">
-                                Cerrar Sesión
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                    {role.includes('ADMIN') && (
+                        <div className="list">
+                            <Link className='link' to={'/crud'}>
+                                <FontAwesomeIcon icon={faLock} /> <p className='text-list'>CRUD</p>
+                            </Link>
+                        </div>
+                    )}
                 </div>
-            </aside>
+            </div>
         </>
     )
 }

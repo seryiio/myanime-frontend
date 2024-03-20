@@ -12,6 +12,7 @@ export interface Season {
     cover_image: string,
     cover_image_secondary: string,
     url_trailer: string,
+    quantity_episodes: number,
     status: boolean,
     animeId: number,
 }
