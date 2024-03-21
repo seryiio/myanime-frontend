@@ -7,8 +7,8 @@ const Dropdown = () => {
             <div className='dropdown'>
                 <nav className='dropdown__nav'>
                     <ul className='dropdown__nav--ul'>
-                        <Link to={'/register'}>Crear Cuenta</Link>
-                        <Link to={'/login'}>Acceder</Link>
+                        <Link reloadDocument to={'/register'}>Crear Cuenta</Link>
+                        <Link reloadDocument to={'/login'}>Acceder</Link>
                     </ul>
                 </nav>
             </div>

@@ -43,7 +43,7 @@ export const CardAnime = ({ props }: any) => {
                             <Suspense key={anime.id} fallback={<h1>Cargando...</h1>}>
                                 <SwiperSlide className='swiper-card__slide'>
                                     <div className='swiper-card__slide--content'>
-                                        <Link to={`/animes/${anime.id}`}>
+                                        <Link reloadDocument to={`/animes/${anime.id}`}>
                                             <div className="card">
                                                 {anime.seasons.map((dataseason) => (
                                                     <Fragment key={dataseason.id}>

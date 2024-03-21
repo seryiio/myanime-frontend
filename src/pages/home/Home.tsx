@@ -43,7 +43,7 @@ export const Home = () => {
                                                 <img src={anime.logo_image} alt={anime.title_english} />
                                             </div>
                                             <p className='p-8 w-full h-32 text-ellipsis overflow-hidden'>{anime.synopsis}</p>
-                                            <Link className='button' to={`/animes/${anime.id}`}>Ver anime</Link>
+                                            <Link reloadDocument className='button' to={`/animes/${anime.id}`}>Ver anime</Link>
                                         </div>
                                     </div>
                                     <div className="section-1__img">
