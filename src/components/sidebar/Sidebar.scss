@@ -73,6 +73,20 @@
         .list {
             @apply w-full;
 
+            .dropdownExplore {
+                .dropdownExplore__ul {
+                    @apply transition ease-in-out delay-150;
+                    .dropdownExplore__ul--genres {
+                        @apply absolute -bottom-full left-full z-50 bg-cyan-400 w-[25em];
+                        display: none;
+                    }
+                }
+
+                .dropdownExplore__ul:hover .dropdownExplore__ul--genres {
+                    display: flex;
+                }
+            }
+
             .link {
                 @apply flex justify-start items-center gap-2 w-full;
             }

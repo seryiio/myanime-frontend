@@ -55,7 +55,7 @@ const Login = () => {
         <>
             <section className='content_login'>
                 <header className='flex justify-center items-center p-4 w-full h-max bg-[#22242b]'>
-                    <Link to={'/'} className='flex justify-center items-center gap-2'>
+                    <Link reloadDocument to={'/'} className='flex justify-center items-center gap-2'>
                         <picture>
                             <img src={Logo} width={50} height={50} alt="Logo My Anime" />
                         </picture>
@@ -84,7 +84,7 @@ const Login = () => {
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
                             />
-                            <Link to={`/`} className='text-white hover:text-[#46b3e6]' >¿Has olvidado tu contraseña?</Link>
+                            <Link reloadDocument to={`/`} className='text-white hover:text-[#46b3e6]' >¿Has olvidado tu contraseña?</Link>
                         </div>
                         <Button type='submit' size="md" isLoading={formik.isSubmitting}>
                             Ingresar

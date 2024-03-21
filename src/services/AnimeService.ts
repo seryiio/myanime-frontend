@@ -2,10 +2,9 @@ import axios from "axios";
 import { Anime } from "../interfaces/Anime";
 import { Season } from "../interfaces/Season";
 import { AnimeDetails } from "../interfaces/AnimeDetails";
-//'https://myanime-backend.onrender.com/api/v1/animes'
-//'https://myanime-backend.onrender.com/api/v1/books'
-export const URL_ANIME = 'https://myanime-api.onrender.com/api/v1/animes';
-export const URL_BOOKS = 'https://myanime-api.onrender.com/api/v1/books';
+
+export const URL_ANIME = `https://myanime-api.onrender.com/api/v1/animes`;
+export const URL_BOOKS = `https://myanime-api.onrender.com/api/v1/books`;
 
 /**
  * 

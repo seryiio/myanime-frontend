@@ -9,8 +9,6 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { getAnimeById, getLastSeasonByAnimeId, getSeasonsByAnimeId } from '../../services/AnimeService';
 import { Anime } from '../../interfaces/Anime';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
 import { Season } from '../../interfaces/Season';
 import { AnimeDetails } from '../../interfaces/AnimeDetails';
 
@@ -71,47 +69,56 @@ export const AnimeData = () => {
                 <h2>Sinopsis</h2>
                 <p>{animeId?.synopsis}</p>
             </section>
-            <section className=" content w-full">
+            <section className=" text-left p-4">
                 <h1>Temporadas</h1>
-                {
-                    animeSeasonById.length ? (
-                        <Swiper
-                            freeMode={true}
-                            breakpoints={{
-                                120: {
-                                    slidesPerView: 2,
-                                    spaceBetween: 20
-                                },
-                                720: {
-                                    slidesPerView: 4,
-                                    spaceBetween: 20
-                                },
-                                1200: {
-                                    slidesPerView: 5,
-                                    spaceBetween: 20
-                                }
-                            }}
-                            modules={[FreeMode, Pagination]}
-                            className="swiper-card ml-0 mr-0"
-                        >
-                            {
-                                animeSeasonById.map((season) => (
-                                    <SwiperSlide key={season.id} className='content-swiper-slide__card '>
-                                        <Link to={`seasons/${season.id}`}>
-                                            <div className="card h-72">
-                                                <div className="card__img h-64">
-                                                    <img src={season.image} alt={season.title_english} className='w-full h-full' />
-                                                </div>
-                                                <div className="card__description text-white">
-                                                    {season.title_english}
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </SwiperSlide>
-                                ))
-                            }
-                        </Swiper >
-                    ) : <div className='text-white'>No hay registro de temporadas</div>}
+                <div className="grid grid-cols-auto-col gap-x-4 gap-y-12">
+                    {
+                        animeSeasonById?.length > 0 ? (
+                            animeSeasonById?.map((season) => (
+                                <Link reloadDocument to={`seasons/${season.id}`}>
+                                    {
+                                        <picture key={season.id} className="w-[10em] h-[10em]">
+                                            <img src={season.image} className="w-full h-full object-fill" alt="" />
+                                        </picture>
+                                    }
+                                    <div className="h-5 truncate">
+                                        <p>{season.title_english}</p>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="flex justify-center items-start">
+                                <h2 className="text-white">No hay animes disponibles</h2>
+                            </div>
+                        )
+                    }
+                </div>
+            </section>
+            
+            <section className=" text-left p-4">
+                <h1>Libros</h1>
+                <div className="grid grid-cols-auto-col gap-x-4 gap-y-12">
+                    {
+                        animeSeasonById?.length > 0 ? (
+                            animeSeasonById?.map((season) => (
+                                <Link reloadDocument to={`seasons/${season.id}`}>
+                                    {
+                                        <picture key={season.id} className="w-[10em] h-[10em]">
+                                            <img src={season.image} className="w-full h-full object-fill" alt="" />
+                                        </picture>
+                                    }
+                                    <div className="h-5 truncate">
+                                        <p>{season.title_english}</p>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="flex justify-center items-start">
+                                <h2 className="text-white">No hay animes disponibles</h2>
+                            </div>
+                        )
+                    }
+                </div>
             </section>
         </>
     )

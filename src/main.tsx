@@ -25,7 +25,7 @@ import CrudSong from './pages/crud/songs/CrudSong.tsx';
 import ListGenres from './pages/genre/ListGenres.tsx';
 import CrudBook from './pages/crud/books/CrudBook.tsx';
 import CrudAnimebB from './pages/crud/animes/CrudAnimebB.tsx';
-import ListBooks from './pages/book/ListBooksByGenre.tsx';
+import ListAnimesByGenre from './pages/anime/ListAnimesByGenre.tsx';
 import ListBooksByGenre from './pages/book/ListBooksByGenre.tsx';
 
 import AuthProvider from "react-auth-kit";
@@ -79,10 +79,10 @@ const router = createBrowserRouter([
         path: 'genres', element: <ListGenres />
       },
       {
-        path: 'books', element: <ListBooks />
+        path: 'genres/:id/animes', element: <ListAnimesByGenre />
       },
       {
-        path: 'genres/:id', element: <ListBooksByGenre />
+        path: 'genres/:id/books', element: <ListBooksByGenre />
       },
       {
         path: 'animes/:id', element: <AnimeData />

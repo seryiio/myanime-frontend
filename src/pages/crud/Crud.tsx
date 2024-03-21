@@ -7,7 +7,7 @@ const Crud = () => {
                 <div className="cruds__title">
                     <h1>CRUDs</h1>
                 </div>
-                <div className="flex gap-8 cruds__links p-10">
+                <div className="grid grid-cols-auto-col gap-8 w-full">
                     <Link className="p-10 rounded-xl bg-slate-700 text-white" to={'books'}>Libros</Link>
                     <Link className="p-10 rounded-xl bg-slate-700 text-white" to={'animes'}>Animes</Link>
                     <Link className="p-10 rounded-xl bg-slate-700 text-white" to={'genres'}>Generos</Link>
