@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from "react";
 import { IMyList, IMyListDetails } from "../../interfaces/MyList";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { Userdata } from "../../interfaces/Userdata";
-import { getMyList, getMyListByUserId, URL_MY_LIST } from "../../services/MyListService";
+import { getMyListByUserId, URL_MY_LIST } from "../../services/MyListService";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +17,6 @@ const MyList = () => {
     const userIdAuthNumber = userId ? Number(userId) : 0;
 
     const [myListByUserId, setmyListByUserId] = useState<IMyListDetails[]>([]);
-    const [myList, setMyList] = useState<IMyList[]>([]);
     const [myListId, setMyListId] = useState<number | undefined>(0);
     const [favorite, setFavorite] = useState('');
     const [status, setStatus] = useState('');

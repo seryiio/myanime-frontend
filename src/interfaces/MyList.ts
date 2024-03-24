@@ -1,4 +1,3 @@
-import { Anime } from "./Anime";
 import { Book } from "./Book";
 import { Season } from "./Season";
 

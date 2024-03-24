@@ -13,7 +13,7 @@ import { getSongsBySeasonId } from "../../services/SongService";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import { IMyList } from "../../interfaces/MyList";
 import axios from "axios";
-import { getMyList, URL_MY_LIST } from "../../services/MyListService";
+import { URL_MY_LIST } from "../../services/MyListService";
 import { showAlert } from "../../utils/Alert";
 import { Userdata } from "../../interfaces/Userdata";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
