@@ -57,7 +57,7 @@ const BottomNavBar = () => {
                         </DropdownSection>
                     </DropdownMenu>
                 </Dropdown>
-                <Link reloadDocument className='flex flex-col justify-center items-center' to={'/'}>
+                <Link reloadDocument className='flex flex-col justify-center items-center' to={'/mylist'}>
                     <FontAwesomeIcon icon={faLayerGroup} />
                     <p className='text-list'>Lista</p>
                 </Link>
