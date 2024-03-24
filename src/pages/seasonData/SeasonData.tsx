@@ -11,32 +11,46 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Song } from "../../interfaces/Song";
 import { getSongsBySeasonId } from "../../services/SongService";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
-// import { IMyList } from "../../interfaces/MyList";
+import { IMyList } from "../../interfaces/MyList";
+import axios from "axios";
+import { URL_MY_LIST } from "../../services/MyListService";
+import { showAlert } from "../../utils/Alert";
+import { Userdata } from "../../interfaces/Userdata";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 // import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 // import { Userdata } from "../../interfaces/Userdata";
 
 const SeasonData = () => {
     const isAuthenticated = useIsAuthenticated();
-    // const authUser = useAuthUser<Userdata>();
-    // const userId = authUser ? authUser.uid : '';
+    const authUser = useAuthUser<Userdata>();
+    const userIdAuth = authUser ? authUser.uid : '';
+    const userIdAuthNumber = userIdAuth ? Number(userIdAuth) : 0;
+
     const navigate = useNavigate();
 
     const animeId = useParams().id;
-    const seasonId = useParams().idSeason;
+    const seasonIdParam = useParams().idSeason;
+    let seasonIdParamNumber: number | undefined;
+
+    if (seasonIdParam !== undefined) {
+        seasonIdParamNumber = parseInt(seasonIdParam);
+    }
 
     const [animeSeasonById, setAnimeSeasonsById] = useState<Season | null>(null);
     const [songs, setSongs] = useState<Song[]>([]);
-    // const [myList, setMyList] = useState<IMyList[]>([]);
+    const [favorite, setFavorite] = useState('');
+    const [status, setStatus] = useState('');
+    const [chapter, setChapter] = useState<number | undefined>(0);
 
     const [quantityEpisodesBySeason, setQuantityEpisodesById] = useState<number[]>([]);
 
     const episodes = animeSeasonById?.quantity_episodes;
 
     useEffect(() => {
-        getSeasonBySeasonId(animeId, seasonId, setAnimeSeasonsById);
-        getSongsBySeasonId(seasonId, setSongs);
-        
-        if (episodes !== undefined) {
+        getSeasonBySeasonId(animeId, seasonIdParam, setAnimeSeasonsById);
+        getSongsBySeasonId(seasonIdParam, setSongs);
+
+        if (episodes !== undefined && episodes > 0) {
             const numbers: number[] = [];
             for (let i = 1; i <= episodes; i++) {
                 numbers.push(i);
@@ -45,7 +59,44 @@ const SeasonData = () => {
         } else {
             setQuantityEpisodesById([]);
         }
-    }, [seasonId]);
+    }, [seasonIdParam, episodes]);
+
+    const openModalRegister = () => {
+        quantityEpisodesBySeason
+        setFavorite('');
+        setStatus('');
+        setChapter(0);
+    }
+
+    // const openModalEdit = (id: number | undefined, favorite: string, status: string, chapter: number, userId: number, seasonId: number, volumeId: number) => {
+    //     setMyListId(id);
+    //     setFavorite(favorite);
+    //     setStatus(status);
+    //     setChapter(chapter);
+    //     setUserId(userId);
+    //     setSeasonId(seasonId);
+    //     setVolumeId(volumeId);
+    // }
+
+    const validate = () => {
+        let parameters: IMyList;
+        let method: string;
+        parameters = {
+            favorite: favorite.trim(),
+            status: status.trim(),
+            chapter: chapter,
+            userId: userIdAuthNumber,
+            seasonId: seasonIdParamNumber,
+        };
+
+        method = 'POST';
+        sendRequest(method, parameters);
+    }
+
+    const sendRequest = async (method: string, parameters: IMyList) => {
+        await axios({ method: method, url: URL_MY_LIST, data: parameters });
+        showAlert('Se registró correctamente', 'success');
+    };
 
     const handleClickAddList = () => {
         {
@@ -57,6 +108,16 @@ const SeasonData = () => {
                 <></>
         }
     }
+
+    const handleSelectionFavoriteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFavorite(e.target.value);
+    };
+    const handleSelectionStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setStatus(e.target.value);
+    };
+    const handleSelectionChapterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setChapter(parseInt(e.target.value));
+    };
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -85,7 +146,7 @@ const SeasonData = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 grid-rows-2-auto w-full place-content-between px-4 gap-8 bg-black">
                     <div className="flex flex-col gap-y-4">
                         <div className="flex justify-between items-center">
-                            <Button onPress={onOpen} onClick={handleClickAddList} color="primary" className="text-[--bg-button] border-[--bg-button] hover:bg-[--bg-button]" variant="ghost">
+                            <Button onPress={onOpen} onClick={() => { handleClickAddList(), openModalRegister() }} color="primary" className="text-[--bg-button] border-[--bg-button] hover:bg-[--bg-button]" variant="ghost">
                                 <FontAwesomeIcon icon={faPlus} />
                                 Agregar a Mi Lista
                             </Button>
@@ -152,17 +213,19 @@ const SeasonData = () => {
                             <ModalHeader className="flex flex-col gap-1">Agregar a Mi Lista</ModalHeader>
                             <ModalBody>
                                 <div className="flex justify-between items-center">
-                                    <p>Reacción:</p>
+                                    <p>Valoración:</p>
                                     <Select
                                         size={"sm"}
                                         placeholder="Seleccionar estado"
-                                        className="dark w-44"
+                                        className="dark w-64"
+                                        onChange={(handleSelectionFavoriteChange)}
                                     >
-                                        <SelectItem key="TERMINADO">TERMINADO</SelectItem>
-                                        <SelectItem key="MIRANDO">MIRANDO</SelectItem>
-                                        <SelectItem key="POR VER">POR VER</SelectItem>
-                                        <SelectItem key="EN ESPERA">EN ESPERA</SelectItem>
-                                        <SelectItem key="OLVIDADO">OLVIDADO</SelectItem>
+                                        <SelectItem key="AÚN NO LO SÉ">AÚN NO LO SÉ</SelectItem>
+                                        <SelectItem key="NO ME GUSTA EN ABSOLUTO">NO ME GUSTA EN ABSOLUTO</SelectItem>
+                                        <SelectItem key="NO ME GUSTA">NO ME GUSTA</SelectItem>
+                                        <SelectItem key="NEUTRAL">NEUTRAL</SelectItem>
+                                        <SelectItem key="ME GUSTA">ME GUSTA</SelectItem>
+                                        <SelectItem key="ME ENCANTA">ME ENCANTA</SelectItem>
                                     </Select>
                                 </div>
                                 <div className="flex justify-between items-center">
@@ -170,13 +233,13 @@ const SeasonData = () => {
                                     <Select
                                         size={"sm"}
                                         placeholder="Seleccionar estado"
-                                        className="dark w-44"
+                                        className="dark w-64"
+                                        onChange={(handleSelectionStatusChange)}
                                     >
                                         <SelectItem key="TERMINADO">TERMINADO</SelectItem>
                                         <SelectItem key="MIRANDO">MIRANDO</SelectItem>
                                         <SelectItem key="POR VER">POR VER</SelectItem>
                                         <SelectItem key="EN ESPERA">EN ESPERA</SelectItem>
-                                        <SelectItem key="OLVIDADO">OLVIDADO</SelectItem>
                                     </Select>
                                 </div>
                                 <div className="flex justify-between items-center">
@@ -185,7 +248,9 @@ const SeasonData = () => {
                                         <Select
                                             size={"sm"}
                                             placeholder="Episodios vistos"
-                                            className="dark w-max"
+                                            className="dark w-44"
+                                            value={chapter ? (chapter).toString() : ''}
+                                            onChange={(handleSelectionChapterChange)}
                                         >
                                             {quantityEpisodesBySeason.map(num => (
                                                 <SelectItem key={num}>{num}</SelectItem>
@@ -199,7 +264,7 @@ const SeasonData = () => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cerrar
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="primary" onPress={onClose} onClick={() => { validate() }}>
                                     Agregar
                                 </Button>
                             </ModalFooter>

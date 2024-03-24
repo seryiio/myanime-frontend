@@ -30,7 +30,7 @@ const BottomNavBar = () => {
                     <DropdownTrigger>
                         <div className='flex flex-col justify-start items-center gap-2 cursor-pointer'
                         >
-                        <FontAwesomeIcon icon={faChevronUp} color='white' size='2xs' />
+                            <FontAwesomeIcon icon={faChevronUp} color='white' size='2xs' />
                             <FontAwesomeIcon icon={faCompass} color='white' /> <p className='text-list'>Explorar </p>
                         </div>
                     </DropdownTrigger>
@@ -48,7 +48,7 @@ const BottomNavBar = () => {
                             {
                                 genres.map(genre => (
                                     <DropdownItem key={genre.id} className='w-max'>
-                                        <Link reloadDocument className='link' to={`/genres/${genre.id}/animes`}>
+                                        <Link reloadDocument to={`/genres/${genre.id}/animes`} className='link' >
                                             <p className='text-list'>{genre.name}</p>
                                         </Link>
                                     </DropdownItem>
