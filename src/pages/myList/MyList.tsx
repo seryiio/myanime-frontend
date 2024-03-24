@@ -5,7 +5,7 @@ import { Userdata } from "../../interfaces/Userdata";
 import { getMyListByUserId, URL_MY_LIST } from "../../services/MyListService";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faFaceFrown, faFaceFrownOpen, faFaceMeh, faFaceSadCry, faFaceSmile, faFaceSmileBeam, faFaceTired, faPlusCircle, faPlusSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faFaceFrown, faFaceFrownOpen, faFaceMeh, faFaceSmile, faFaceSmileBeam, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import axios from "axios";
 import { showAlert } from "../../utils/Alert";

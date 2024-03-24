@@ -17,7 +17,6 @@ import { URL_MY_LIST } from "../../services/MyListService";
 import { showAlert } from "../../utils/Alert";
 import { Userdata } from "../../interfaces/Userdata";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import ModalMyList from "../../components/modalMyList/ModalMyList";
 // import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 // import { Userdata } from "../../interfaces/Userdata";
 
