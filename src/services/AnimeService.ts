@@ -71,6 +71,18 @@ export const getLastSeasonByAnimeId = async (animeId: string | undefined, setLas
     }
 };
 
+
+
+export const getLastVolumeByBookId = async (animeId: string | undefined, setLastSeasonByAnimeId: React.Dispatch<React.SetStateAction<AnimeDetails | undefined>>) => {
+    try {
+        const response = await axios.get(`${URL_ANIME}/${animeId}/lastseason`);
+        setLastSeasonByAnimeId(response.data);
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error al obtener la ultima temporada de cada anime:', error);
+    }
+};
+
 /**
  * 
  * *FUNCION QUE SIRVE PARA RECOGER LOS DATOS DE UNA TEMPORADA POR SU ID DEPENDIENDO DEL ANIME SELECCIONADO

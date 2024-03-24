@@ -17,6 +17,7 @@ import { URL_MY_LIST } from "../../services/MyListService";
 import { showAlert } from "../../utils/Alert";
 import { Userdata } from "../../interfaces/Userdata";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import ModalMyList from "../../components/modalMyList/ModalMyList";
 // import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 // import { Userdata } from "../../interfaces/Userdata";
 
@@ -205,7 +206,6 @@ const SeasonData = () => {
                     ) : <div className='text-white'>No hay registro de canciones</div>}
 
             </section>
-
             <Modal isOpen={isOpen} className="dark text-white" onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
                 <ModalContent>
                     {(onClose) => (
@@ -249,7 +249,7 @@ const SeasonData = () => {
                                             size={"sm"}
                                             placeholder="Episodios vistos"
                                             className="dark w-44"
-                                            value={chapter ? (chapter).toString() : ''}
+                                            value={(chapter ? chapter.toString() : '')}
                                             onChange={(handleSelectionChapterChange)}
                                         >
                                             {quantityEpisodesBySeason.map(num => (
