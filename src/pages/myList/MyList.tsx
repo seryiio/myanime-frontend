@@ -1,22 +1,88 @@
 import { Suspense, useEffect, useState } from "react";
-import { IMyList } from "../../interfaces/MyList";
+import { IMyList, IMyListDetails } from "../../interfaces/MyList";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { Userdata } from "../../interfaces/Userdata";
-import { getMyListByUserId } from "../../services/MyListService";
+import { getMyList, getMyListByUserId, URL_MY_LIST } from "../../services/MyListService";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import axios from "axios";
+import { showAlert } from "../../utils/Alert";
 
 const MyList = () => {
     const authUser = useAuthUser<Userdata>();
     const userId = authUser ? authUser.uid : '';
     const userIdString = userId ? userId.toString() : '';
+    const userIdAuthNumber = userId ? Number(userId) : 0;
 
-    const [myListByUserId, setmyListByUserId] = useState<IMyList[]>([]);
+    const [myListByUserId, setmyListByUserId] = useState<IMyListDetails[]>([]);
+    const [myList, setMyList] = useState<IMyList[]>([]);
+    const [myListId, setMyListId] = useState<number | undefined>(0);
+    const [favorite, setFavorite] = useState('');
+    const [status, setStatus] = useState('');
+    const [chapter, setChapter] = useState<number | undefined>(0);
 
     useEffect(() => {
         getMyListByUserId(userIdString, setmyListByUserId);
     }, []);
 
-    console.log(myListByUserId);
+    const getStatusClass = (status: string) => {
+        if (status === "MIRANDO") {
+            return "bg-green-900 text-green-300";
+        }
+        else if (status === "POR VER") {
+            return "bg-yellow-900 text-yellow-300";
+        } else {
+            return "bg-red-900 text-red-300";
+        }
+    };
+
+    const openModalEdit = (id: number | undefined, favorite: string, status: string, chapter: number) => {
+        setMyListId(id);
+        setFavorite(favorite);
+        setStatus(status);
+        setChapter(chapter);
+    }
+
+    const validate = () => {
+        let parameters: IMyList;
+        let method: string;
+        parameters = {
+            favorite: favorite.trim(),
+            status: status.trim(),
+            chapter: chapter,
+            userId: userIdAuthNumber,
+        };
+
+        method = 'PUT';
+        sendRequest(method, parameters);
+    }
+
+    const deleteMyList = async (id: number | undefined) => {
+        setMyListId(id);
+        await axios({ method: 'DELETE', url: URL_MY_LIST + `/${myListId}`, data: id });
+        showAlert('Se elimino correctamente', 'success');
+        getMyListByUserId(userIdString,setmyListByUserId);
+    }
+
+    const sendRequest = async (method: string, parameters: IMyList) => {
+        await axios({ method: method, url: URL_MY_LIST, data: parameters });
+        showAlert('Se registró correctamente', 'success');
+        getMyListByUserId(userIdString, setmyListByUserId);
+    };
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const handleSelectionFavoriteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFavorite(e.target.value);
+    };
+    const handleSelectionStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setStatus(e.target.value);
+    };
+    // const handleSelectionChapterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setChapter(parseInt(e.target.value));
+    // };
 
     return (
         <>
@@ -26,14 +92,36 @@ const MyList = () => {
                     {myListByUserId.length > 0 ? (
                         <div className="grid grid-cols-auto-col gap-x-4 gap-y-12">
                             {myListByUserId.map((list) => (
-                                <Link key={list.id} to={`/animes/${list.season.animeId}`} className="w-[10em] h-[14em]">
-                                    <picture className="w-[10em] h-[10em]">
-                                        {list.season && <img src={list.season.image} className="w-full h-full object-fill" alt="" />}
-                                    </picture>
-                                    <div className="h-5 truncate">
-                                        <p>{list.season ? list.season.title_english : ''}</p>
+                                <div key={list.id} className="relative w-[10em] h-[14em] ">
+                                    <span className="cursor-pointer" onClick={() => { onOpen(), openModalEdit(list.id, list.favorite, list.status, list.chapter) }}>
+                                        <FontAwesomeIcon icon={faEdit} className="absolute -top-2 -right-2 bg-white text-black p-2 rounded-full"></FontAwesomeIcon>
+                                    </span>
+                                    <Link to={`/animes/${list.season.animeId}`}>
+                                        <picture className="w-[10em] h-[10em]">
+                                            {list.season && <img src={list.season.image} className="w-full h-full object-fill" alt="" />}
+                                        </picture>
+                                    </Link>
+                                    <div>
+                                        <div className="h-5 truncate">
+                                            <p>{list.season.type}</p>
+                                        </div>
+                                        <div className="flex w-full h-full">
+                                            <Link to={`/animes/${list.season.animeId}`}>
+                                                <p>{list.season ? list.season.title_english : ''}</p>
+                                            </Link>
+                                            <p>{list.favorite}</p>
+                                        </div>
+                                        <div className="w-full h-full">
+                                            <span
+                                                className={`w-max text-xs font-medium me-2 px-2.5 py-0.5 rounded ${getStatusClass(list.status)}`}
+                                            >{list.status}
+                                            </span>
+                                            <span className="text-white">
+                                                {list.chapter} / {list.season.quantity_episodes}
+                                            </span>
+                                        </div>
                                     </div>
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     ) : (
@@ -45,6 +133,80 @@ const MyList = () => {
 
 
             </div >
+
+
+            <Modal isOpen={isOpen} className="dark text-white" onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Agregar a Mi Lista</ModalHeader>
+                            <ModalBody>
+                                <div className="flex justify-between items-center">
+                                    <p>Valoración:</p>
+                                    <Select
+                                        size={"sm"}
+                                        placeholder="Seleccionar fav"
+                                        className="dark w-64"
+                                        value={favorite}
+                                        onChange={(handleSelectionFavoriteChange)}
+                                    >
+                                        <SelectItem key="AÚN NO LO SÉ">AÚN NO LO SÉ</SelectItem>
+                                        <SelectItem key="NO ME GUSTA EN ABSOLUTO">NO ME GUSTA EN ABSOLUTO</SelectItem>
+                                        <SelectItem key="NO ME GUSTA">NO ME GUSTA</SelectItem>
+                                        <SelectItem key="NEUTRAL">NEUTRAL</SelectItem>
+                                        <SelectItem key="ME GUSTA">ME GUSTA</SelectItem>
+                                        <SelectItem key="ME ENCANTA">ME ENCANTA</SelectItem>
+                                    </Select>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <p>Estado: </p>
+                                    <Select
+                                        size={"sm"}
+                                        placeholder="Seleccionar estado"
+                                        className="dark w-64"
+                                        value={status}
+                                        onChange={(handleSelectionStatusChange)}
+                                    >
+                                        <SelectItem key="TERMINADO">TERMINADO</SelectItem>
+                                        <SelectItem key="MIRANDO">MIRANDO</SelectItem>
+                                        <SelectItem key="POR VER">POR VER</SelectItem>
+                                        <SelectItem key="EN ESPERA">EN ESPERA</SelectItem>
+                                    </Select>
+                                </div>
+                                {/* <div className="flex justify-between items-center">
+                                    <p>Episodios vistos</p>
+                                    <div className="flex justify-center items-center gap-2">
+                                        <Select
+                                            size={"sm"}
+                                            placeholder="Episodios vistos"
+                                            className="dark w-max"
+                                            onChange={(handleSelectionChapterChange)}
+                                        >
+                                            {quantityEpisodesBySeason.map(num => (
+                                                <SelectItem key={num}>{num}</SelectItem>
+                                            ))}
+                                        </Select>
+                                        <p>/{animeSeasonById?.quantity_episodes}</p>
+                                    </div>
+                                </div> */}
+                                
+                                <div className="cursor-pointer flex justify-end items-center gap-2 text-red-500" onClick={() => deleteMyList(1)}>
+                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                    <p className="text-red-500">Eliminar de Mi Lista</p>
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Cerrar
+                                </Button>
+                                <Button color="primary" onPress={onClose} onClick={() => { validate() }}>
+                                    Agregar
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </>
     )
 }

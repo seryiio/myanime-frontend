@@ -2,11 +2,22 @@ import { Anime } from "./Anime";
 import { Book } from "./Book";
 import { Season } from "./Season";
 
-export interface IMyList {
-    id: number,
+export interface IMyListDetails {
+    id?: number,
     favorite: string,
     status: string,
-    anime: Anime,
+    chapter: number,
+    userId: number,
     season: Season,
-    book: Book,
+    volume: Book,
+}
+
+export interface IMyList {
+    id?: number,
+    favorite: string,
+    status: string,
+    chapter?: number,
+    userId: number,
+    seasonId?: number,
+    volumeId?: number,
 }

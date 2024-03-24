@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client'
 import '@fontsource-variable/baloo-2';
 
 import {
+  createBrowserRouter,
   createHashRouter,
   RouterProvider,
 } from "react-router-dom";
@@ -41,7 +42,7 @@ const store = createStore({
   cookieSecure: window.location.protocol === 'https:'
 });
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
