@@ -130,7 +130,7 @@ const MyList = () => {
                 <h1>Mi Lista</h1>
                 <Suspense fallback={<div>Cargando...</div>}>
                     {myListByUserId.length > 0 ? (
-                        <div className="grid grid-cols-auto-col gap-x-8 gap-y-12">
+                        <div className="grid place-items-center lg:place-items-start grid-cols-auto-col gap-x-8 gap-y-12">
                             {myListByUserId.map((list) => (
                                 <div key={list.id} className="relative w-[10em] h-max ">
                                     <span className="cursor-pointer" onClick={() => { onOpen(), openModalEdit(list.id, list.favorite, list.status, list.chapter, list.season.id, list.season.quantity_episodes) }}>
