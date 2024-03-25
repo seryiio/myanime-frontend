@@ -36,7 +36,7 @@ export const Sidebar = () => {
                             <div className='flex justify-start items-center gap-2 cursor-pointer'
                             >
                                 <FontAwesomeIcon icon={faCompass} color='white' /> <p className='text-list'>Explorar </p>
-                                <FontAwesomeIcon icon={faChevronRight} color='white' size='2xs' />
+                                <FontAwesomeIcon icon={faChevronRight} color='white' className='text-list' size='2xs' />
                             </div>
                         </DropdownTrigger>
                         <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
