@@ -33,6 +33,7 @@ import RequireAuth from '@auth-kit/react-router/RequireAuth'
 import createStore from 'react-auth-kit/createStore';
 import MyList from './pages/myList/MyList.tsx';
 import ProtectedRoute from './components/routes/ProtectedRoute.tsx';
+import ListAnimes from './pages/anime/ListAnimes.tsx';
 
 const store = createStore({
   authName: '_auth',
@@ -83,6 +84,9 @@ const router = createHashRouter([
       },
       {
         path: 'genres/:id/books', element: <ListBooksByGenre />
+      },
+      {
+        path: 'animes', element: <ListAnimes />
       },
       {
         path: 'animes/:id', element: <AnimeData />
