@@ -1,16 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/Branding/Logo.svg';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Userdata } from '../../interfaces/Userdata';
 import SearchInput from '../searchInput/SearchInput';
-import { useState } from 'react';
-import { Anime } from '../../interfaces/Anime';
-import { getAnimes } from '../../services/AnimeService';
 
 const Header = () => {
     const isAuthenticated = useIsAuthenticated();

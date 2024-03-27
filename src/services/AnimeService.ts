@@ -3,7 +3,7 @@ import { Anime } from "../interfaces/Anime";
 import { Season } from "../interfaces/Season";
 import { AnimeDetails } from "../interfaces/AnimeDetails";
 
-export const URL_ANIME = `http://localhost:3000/api/v1/animes`;
+export const URL_ANIME = `https://myanime-api.onrender.com/api/v1/animes`;
 export const URL_BOOKS = `https://myanime-api.onrender.com/api/v1/books`;
 
 /**
