@@ -7,6 +7,10 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Userdata } from '../../interfaces/Userdata';
+import SearchInput from '../searchInput/SearchInput';
+import { useState } from 'react';
+import { Anime } from '../../interfaces/Anime';
+import { getAnimes } from '../../services/AnimeService';
 
 const Header = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -46,21 +50,16 @@ const Header = () => {
             ];
         }
     };
+
     return (
         <>
             <div>
-                <div className="aside__header w-1/3"><Link to={'/'}>
+                <div className="aside__header w-1/3"><Link reloadDocument to={'/'}>
                     <img src={Logo} alt="Logo MyAnimes" /></Link>
                 </div>
             </div>
-            <div className='w-1/2 lg:w-1/3'>
-                <Input
-                    className='dark text-foreground bg-background'
-                    placeholder="Buscar..."
-                    endContent={
-                        <FontAwesomeIcon icon={faSearch} />
-                    }
-                />
+            <div className='w-1/2 lg:w-1/3 bg-white z-50'>
+                <SearchInput />
             </div>
             <Dropdown className='aside__content-2--bottom dark text-white'>
                 <DropdownTrigger className='dropdownTrigger'>
