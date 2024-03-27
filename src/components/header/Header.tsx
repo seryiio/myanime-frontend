@@ -1,12 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/Branding/Logo.svg';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Userdata } from '../../interfaces/Userdata';
+import SearchInput from '../searchInput/SearchInput';
 
 const Header = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -46,21 +47,16 @@ const Header = () => {
             ];
         }
     };
+
     return (
         <>
             <div>
-                <div className="aside__header w-1/3"><Link to={'/'}>
+                <div className="aside__header w-1/3"><Link reloadDocument to={'/'}>
                     <img src={Logo} alt="Logo MyAnimes" /></Link>
                 </div>
             </div>
-            <div className='w-1/2 lg:w-1/3'>
-                <Input
-                    className='dark text-foreground bg-background'
-                    placeholder="Buscar..."
-                    endContent={
-                        <FontAwesomeIcon icon={faSearch} />
-                    }
-                />
+            <div className='w-1/2 lg:w-1/3 bg-white z-50'>
+                <SearchInput />
             </div>
             <Dropdown className='aside__content-2--bottom dark text-white'>
                 <DropdownTrigger className='dropdownTrigger'>
